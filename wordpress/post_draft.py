@@ -11,7 +11,8 @@
 
 記事の先頭にfront matterを書ける:
   ---
-  title: 記事タイトル
+  title: 【】付きの32文字前後のタイトル(狙いKWを含める)
+  keyword: 狙いKW            (必須・titleに含まれること)
   slug: english-slug        (任意)
   categories: [体験談]       (任意・既存カテゴリ名のみ)
   tags: [ADHD, マッチングアプリ] (任意・既存タグ名のみ)
@@ -149,6 +150,21 @@ def md_to_html(md):
     return "\n".join(out)
 
 
+def check_title(title, keyword):
+    """タイトル規約: KW必須・【】必須(エラー) / 32文字前後(警告)。"""
+    errors = []
+    if not keyword:
+        errors.append("front matter に keyword(狙いKW)が必要です")
+    elif keyword not in title:
+        errors.append(f"タイトルにKW「{keyword}」が含まれていません")
+    if not re.search(r"【.+?】", title):
+        errors.append("タイトルに【】を使ってください")
+    n = len(title)
+    if not 28 <= n <= 36:
+        print(f"  警告: タイトルが{n}文字です(32文字前後が目安)", file=sys.stderr)
+    return errors
+
+
 def resolve_terms(url, token, kind, names):
     """既存のカテゴリ/タグ名をIDに変換。存在しない名前は警告して無視(勝手に作らない)。"""
     ids = []
@@ -182,6 +198,9 @@ def main():
     title = meta.get("title")
     if not title:
         sys.exit("front matter に title が必要です")
+    errors = check_title(title, meta.get("keyword", ""))
+    if errors:
+        sys.exit("タイトル規約エラー:\n  - " + "\n  - ".join(errors))
     content = md_to_html(body)
     payload = {"title": title, "content": content, "status": "draft"}
     for k in ("slug", "excerpt"):

@@ -1,6 +1,7 @@
 ---
-title: 【下書きテスト】マッチングアプリで2回目に続かなかった私が試したこと
-slug: draft-test
+title: 【実体験】マッチングアプリで2回目に続かない原因と私が試した対策5選
+keyword: マッチングアプリ
+slug: matching-app-second-date
 tags: []
 ---
 ## はじめに
