@@ -60,9 +60,10 @@ def md_to_html(md):
         s = line.strip()
         if not s:
             flush()
-        elif s.startswith("<!--"):
+        elif s.startswith("<"):
+            # HTMLコメントやボタンなどのHTMLはそのまま通す
             flush()
-            out.append(s)
+            out.append(line)
         elif m := re.match(r"^(#{2,6})\s+(.*)", s):
             flush()
             level = len(m.group(1))
