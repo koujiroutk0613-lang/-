@@ -11,10 +11,10 @@ Unsplash ライセンスにより、商用利用も含めて無料で使えま�
 | signature-1.jpg | 看板商品 No.01（こぶたブレンド） | https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd |
 | signature-2.jpg | 看板商品 No.02（カカオのクグロフ） | https://images.unsplash.com/photo-1541783245831-57d6fb0926d3 |
 | signature-3.jpg | 看板商品 No.03（フランボワーズのガトー） | https://images.unsplash.com/photo-1565958011703-44f9829ba187 |
-| gallery-1.jpg | 写真ギャラリー（大） | https://images.unsplash.com/photo-1517248135467-4c7edcad34c4 |
-| gallery-2.jpg | 写真ギャラリー | https://images.unsplash.com/photo-1516743619420-154b70a65fea |
-| gallery-3.jpg | 写真ギャラリー | https://images.unsplash.com/photo-1517433670267-08bbd4be890f |
-| gallery-4.jpg | 写真ギャラリー（横長） | https://images.unsplash.com/photo-1442512595331-e89e73853f31 |
+| gallery-1.jpg | ギャラリーのスライド 01 | https://images.unsplash.com/photo-1517248135467-4c7edcad34c4 |
+| gallery-2.jpg | ギャラリーのスライド 03 | https://images.unsplash.com/photo-1516743619420-154b70a65fea |
+| gallery-3.jpg | ギャラリーのスライド 04 | https://images.unsplash.com/photo-1517433670267-08bbd4be890f |
+| gallery-4.jpg | ギャラリーのスライド 02 | https://images.unsplash.com/photo-1442512595331-e89e73853f31 |
 
 ## 写真を差し替えるには
 同じファイル名で写真を上書きするだけで、ホームページに反映されます。
@@ -37,4 +37,5 @@ Unsplash ライセンスにより、商用利用も含めて無料で使えま�
 
 | ファイル名 | 使われる場所 | 元の写真 |
 |---|---|---|
+| gallery-5.jpg | ギャラリーのスライド 05 | https://images.unsplash.com/photo-1516467508483-a7212febe31a |
 | kobuta.jpg | 「Our Name（店名の由来）」 | https://images.unsplash.com/photo-1516467508483-a7212febe31a |

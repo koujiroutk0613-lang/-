@@ -65,6 +65,7 @@
     .ph-g2         { background-image: url("images/gallery-2.jpg"),   linear-gradient(135deg, #2d2722, #121010); }
     .ph-g3         { background-image: url("images/gallery-3.jpg"),   linear-gradient(135deg, #43362b, #16120f); }
     .ph-g4         { background-image: url("images/gallery-4.jpg"),   linear-gradient(135deg, #332a23, #110e0c); }
+    .ph-g5         { background-image: url("images/gallery-5.jpg"),   linear-gradient(135deg, #3d3128, #15110e); }
 
     /* ----- Header ----- */
     header {
@@ -378,14 +379,120 @@
 
     /* ----- Gallery ----- */
     .gallery { padding: 0; }
-    .gallery-grid {
-      display: grid;
-      grid-template-columns: 2fr 1fr 1fr;
-      grid-template-rows: repeat(2, minmax(220px, 28vw));
-      gap: 6px;
+    .slideshow {
+      position: relative;
+      height: clamp(420px, 82vh, 860px);
+      overflow: hidden;
+      background: var(--ink-2);
+      outline: none;
     }
-    .gallery-grid .photo:first-child { grid-row: span 2; }
-    .gallery-grid .photo:last-child { grid-column: span 2; }
+    .slide {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 1.6s var(--ease), visibility 0s linear 1.6s;
+    }
+    .slide.active {
+      opacity: 1;
+      visibility: visible;
+      transition: opacity 1.6s var(--ease), visibility 0s;
+    }
+    .slide .photo {
+      position: absolute;
+      inset: 0;
+      transform: scale(1.08);
+      transition: transform 8s linear;
+    }
+    .slide.active .photo { transform: scale(1); }
+    .slide .photo::after {
+      background: linear-gradient(180deg, rgba(20,17,15,.35) 0%, rgba(20,17,15,0) 30%, rgba(20,17,15,0) 50%, rgba(20,17,15,.85) 100%);
+    }
+    .slide-caption {
+      position: absolute;
+      left: clamp(16px, 6vw, 80px);
+      bottom: clamp(90px, 12vh, 120px);
+      max-width: 34em;
+      opacity: 0;
+      transform: translateY(16px);
+      transition: opacity 1s var(--ease) .5s, transform 1s var(--ease) .5s;
+    }
+    .slide.active .slide-caption { opacity: 1; transform: none; }
+    .slide-no {
+      font-family: var(--serif-en);
+      font-style: italic;
+      color: var(--gold);
+      font-size: 1.05rem;
+      letter-spacing: .2em;
+    }
+    .slide-caption h3 {
+      font-weight: 500;
+      font-size: clamp(1.25rem, 2.6vw, 1.9rem);
+      letter-spacing: .14em;
+      line-height: 1.6;
+      margin: 6px 0 4px;
+    }
+    .slide-caption p {
+      font-family: var(--serif-en);
+      color: var(--ivory-dim);
+      letter-spacing: .14em;
+    }
+    .slide-head {
+      position: absolute;
+      top: clamp(28px, 6vh, 56px);
+      left: 0; right: 0;
+      text-align: center;
+      z-index: 2;
+      pointer-events: none;
+    }
+    .slide-head .eyebrow { margin-bottom: 0; }
+    .slide-controls {
+      position: absolute;
+      right: clamp(16px, 6vw, 80px);
+      bottom: clamp(36px, 6vh, 56px);
+      left: clamp(16px, 6vw, 80px);
+      z-index: 2;
+      display: flex;
+      align-items: center;
+      gap: 22px;
+    }
+    .slide-progress {
+      flex: 1;
+      height: 1px;
+      background: var(--line);
+      position: relative;
+      overflow: hidden;
+    }
+    .slide-progress span {
+      position: absolute;
+      inset: 0;
+      background: var(--gold);
+      transform: scaleX(0);
+      transform-origin: left;
+    }
+    .slide-progress span.run { transform: scaleX(1); transition: transform var(--slide-ms, 6000ms) linear; }
+    .slide-count {
+      font-family: var(--serif-en);
+      letter-spacing: .2em;
+      font-size: .95rem;
+      color: var(--ivory-dim);
+      white-space: nowrap;
+    }
+    .slide-count b { color: var(--ivory); font-weight: 400; }
+    .slide-btn {
+      width: 52px; height: 52px;
+      border-radius: 50%;
+      border: 1px solid var(--gold-soft);
+      background: rgba(20,17,15,.35);
+      color: var(--gold);
+      font-size: 1.1rem;
+      cursor: pointer;
+      display: grid;
+      place-items: center;
+      transition: background .3s, color .3s, border-color .3s;
+      flex-shrink: 0;
+    }
+    .slide-btn:hover, .slide-btn:focus-visible { background: var(--gold); color: var(--ink); border-color: var(--gold); outline: none; }
 
     /* ----- Information ----- */
     .info-grid {
@@ -514,11 +621,9 @@
       .sig-grid { grid-template-columns: 1fr; gap: 70px; }
       .sig-item .photo { aspect-ratio: 4 / 3; }
       .section-head { margin-bottom: 60px; }
-      .gallery-grid {
-        grid-template-columns: 1fr 1fr;
-        grid-template-rows: repeat(3, 44vw);
-      }
-      .gallery-grid .photo:first-child { grid-row: auto; grid-column: span 2; }
+      .slideshow { height: clamp(440px, 78vh, 640px); }
+      .slide-btn { width: 44px; height: 44px; }
+      .slide-controls { gap: 14px; }
     }
     @media (max-width: 520px) {
       .brand-name { font-size: 1.1rem; letter-spacing: .24em; }
@@ -710,12 +815,57 @@
     </section>
 
     <!-- Gallery -->
-    <section class="gallery" aria-label="店内の様子">
-      <div class="gallery-grid">
-        <div class="photo ph-g1 reveal" role="img" aria-label="照明を落とした落ち着いた店内"></div>
-        <div class="photo ph-g2 reveal reveal-d1" role="img" aria-label="ラテアートを描く手元"></div>
-        <div class="photo ph-g3 reveal reveal-d2" role="img" aria-label="木箱に並ぶ焼き菓子とパン"></div>
-        <div class="photo ph-g4 reveal reveal-d1" role="img" aria-label="ドリッパーで珈琲を淹れるカウンター"></div>
+    <section class="gallery" id="gallery">
+      <div class="slideshow" tabindex="0" role="region" aria-roledescription="carousel" aria-label="店内の様子のスライドショー">
+        <div class="slide-head"><p class="eyebrow center">Gallery</p></div>
+
+        <div class="slide active" role="group" aria-roledescription="slide" aria-label="1 / 5">
+          <div class="photo ph-g1" role="img" aria-label="照明を落とした落ち着いた店内"></div>
+          <div class="slide-caption">
+            <p class="slide-no">01</p>
+            <h3>灯りを落とした、静かな店内</h3>
+            <p>The Quiet Room</p>
+          </div>
+        </div>
+        <div class="slide" role="group" aria-roledescription="slide" aria-label="2 / 5">
+          <div class="photo ph-g4" role="img" aria-label="ドリッパーで珈琲を淹れるカウンター"></div>
+          <div class="slide-caption">
+            <p class="slide-no">02</p>
+            <h3>一杯ずつ、湯を落とすカウンター</h3>
+            <p>The Brewing Counter</p>
+          </div>
+        </div>
+        <div class="slide" role="group" aria-roledescription="slide" aria-label="3 / 5">
+          <div class="photo ph-g2" role="img" aria-label="ラテアートを描く手元"></div>
+          <div class="slide-caption">
+            <p class="slide-no">03</p>
+            <h3>ミルクで描く、ささやかな模様</h3>
+            <p>Latte Art</p>
+          </div>
+        </div>
+        <div class="slide" role="group" aria-roledescription="slide" aria-label="4 / 5">
+          <div class="photo ph-g3" role="img" aria-label="木箱に並ぶ焼き菓子とパン"></div>
+          <div class="slide-caption">
+            <p class="slide-no">04</p>
+            <h3>朝いちばんに焼きあげる菓子</h3>
+            <p>Fresh from the Oven</p>
+          </div>
+        </div>
+        <div class="slide" role="group" aria-roledescription="slide" aria-label="5 / 5">
+          <div class="photo ph-g5" role="img" aria-label="わらの上に立つ、白いこぶた"></div>
+          <div class="slide-caption">
+            <p class="slide-no">05</p>
+            <h3>そして、店名の由来のこぶた</h3>
+            <p>Our Little Muse</p>
+          </div>
+        </div>
+
+        <div class="slide-controls">
+          <button class="slide-btn slide-prev" type="button" aria-label="前の写真">&#8592;</button>
+          <button class="slide-btn slide-next" type="button" aria-label="次の写真">&#8594;</button>
+          <div class="slide-progress" aria-hidden="true"><span></span></div>
+          <p class="slide-count" aria-live="polite"><b class="slide-current">01</b> / 05</p>
+        </div>
       </div>
     </section>
 
@@ -800,6 +950,62 @@
       });
     }, { threshold: 0.12 });
     document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+    // ギャラリーのスライドショー
+    (() => {
+      const show = document.querySelector('.slideshow');
+      const slides = [...show.querySelectorAll('.slide')];
+      const bar = show.querySelector('.slide-progress span');
+      const current = show.querySelector('.slide-current');
+      const INTERVAL = 6000;
+      const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      let index = 0, timer = null, paused = false;
+      show.style.setProperty('--slide-ms', INTERVAL + 'ms');
+
+      const restartBar = () => {
+        bar.classList.remove('run');
+        void bar.offsetWidth; // アニメーションをリセット
+        if (!paused && !reduceMotion) bar.classList.add('run');
+      };
+      const go = n => {
+        slides[index].classList.remove('active');
+        slides[index].setAttribute('aria-hidden', 'true');
+        index = (n + slides.length) % slides.length;
+        slides[index].classList.add('active');
+        slides[index].removeAttribute('aria-hidden');
+        current.textContent = String(index + 1).padStart(2, '0');
+        schedule();
+      };
+      const schedule = () => {
+        clearTimeout(timer);
+        restartBar();
+        if (!paused && !reduceMotion) timer = setTimeout(() => go(index + 1), INTERVAL);
+      };
+      const setPaused = p => { paused = p; schedule(); };
+
+      slides.forEach((s, i) => { if (i) s.setAttribute('aria-hidden', 'true'); });
+      show.querySelector('.slide-prev').addEventListener('click', () => go(index - 1));
+      show.querySelector('.slide-next').addEventListener('click', () => go(index + 1));
+      show.addEventListener('keydown', e => {
+        if (e.key === 'ArrowLeft') go(index - 1);
+        if (e.key === 'ArrowRight') go(index + 1);
+      });
+      show.addEventListener('mouseenter', () => setPaused(true));
+      show.addEventListener('mouseleave', () => setPaused(false));
+
+      // スマホ：左右にスワイプで切り替え
+      let startX = null;
+      show.addEventListener('touchstart', e => { startX = e.touches[0].clientX; }, { passive: true });
+      show.addEventListener('touchend', e => {
+        if (startX === null) return;
+        const dx = e.changedTouches[0].clientX - startX;
+        if (Math.abs(dx) > 40) go(dx < 0 ? index + 1 : index - 1);
+        startX = null;
+      });
+
+      // 画面に見えているときだけ自動で進める
+      new IntersectionObserver(([e]) => setPaused(!e.isIntersecting), { threshold: 0.3 }).observe(show);
+    })();
 
     document.getElementById('year').textContent = new Date().getFullYear();
   </script>
