@@ -32,3 +32,9 @@ Unsplash ライセンスにより、商用利用も含めて無料で使えま�
 | menu-kouglof.jpg | カカオのクグロフ | https://images.unsplash.com/photo-1541783245831-57d6fb0926d3 |
 | menu-framboise.jpg | フランボワーズのガトー | https://images.unsplash.com/photo-1565958011703-44f9829ba187 |
 | menu-tiramisu.jpg | 珈琲のティラミス | https://images.unsplash.com/photo-1624001934657-640af7e2c599 |
+
+## そのほかの写真
+
+| ファイル名 | 使われる場所 | 元の写真 |
+|---|---|---|
+| kobuta.jpg | 「Our Name（店名の由来）」 | https://images.unsplash.com/photo-1516467508483-a7212febe31a |

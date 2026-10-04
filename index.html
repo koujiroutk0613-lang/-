@@ -60,6 +60,7 @@
     .ph-sig1       { background-image: url("images/signature-1.jpg"), radial-gradient(circle at 50% 45%, #5a4535 0%, #1d1713 75%); }
     .ph-sig2       { background-image: url("images/signature-2.jpg"), radial-gradient(circle at 50% 45%, #6b5a48 0%, #201a15 75%); }
     .ph-sig3       { background-image: url("images/signature-3.jpg"), radial-gradient(circle at 50% 45%, #4e3a2c 0%, #1b1511 75%); }
+    .ph-kobuta     { background-image: url("images/kobuta.jpg"),      linear-gradient(160deg, #4a3b2e 0%, #1a1512 100%); }
     .ph-g1         { background-image: url("images/gallery-1.jpg"),   linear-gradient(135deg, #3a2e25, #15110e); }
     .ph-g2         { background-image: url("images/gallery-2.jpg"),   linear-gradient(135deg, #2d2722, #121010); }
     .ph-g3         { background-image: url("images/gallery-3.jpg"),   linear-gradient(135deg, #43362b, #16120f); }
@@ -229,6 +230,32 @@
       font-size: 1.4rem;
       color: var(--gold);
       letter-spacing: .08em;
+    }
+
+    /* ----- Our Name ----- */
+    .name-section { padding-top: 40px; }
+    .name-grid {
+      display: grid;
+      grid-template-columns: 6fr 5fr;
+      gap: clamp(40px, 8vw, 120px);
+      align-items: center;
+    }
+    .name-section .photo {
+      aspect-ratio: 4 / 5;
+      outline: 1px solid var(--gold-soft);
+      outline-offset: 14px;
+    }
+    .name-section .photo::after { background: linear-gradient(180deg, rgba(20,17,15,0) 70%, rgba(20,17,15,.35) 100%); }
+    .name-section h2 { margin-bottom: 40px; }
+    .name-section .lead + .lead { margin-top: 24px; }
+    .name-caption {
+      margin-top: 30px;
+      font-family: var(--serif-en);
+      font-style: italic;
+      color: var(--muted);
+      font-size: .95rem;
+      letter-spacing: .1em;
+      text-align: center;
     }
 
     /* ----- Signature ----- */
@@ -480,7 +507,9 @@
       nav li a { display: block; padding: 14px 0; }
       .nav-reserve { margin-top: 12px; padding: 10px 32px !important; }
       section { padding: 110px 0; }
-      .philosophy-grid, .info-grid { grid-template-columns: 1fr; }
+      .philosophy-grid, .info-grid, .name-grid { grid-template-columns: 1fr; }
+      .name-grid .name-figure { order: -1; }
+      .name-section .photo { aspect-ratio: 4 / 3; outline-offset: 8px; }
       .philosophy .photo { aspect-ratio: 4 / 3; }
       .sig-grid { grid-template-columns: 1fr; gap: 70px; }
       .sig-item .photo { aspect-ratio: 4 / 3; }
@@ -572,6 +601,30 @@
           </p>
           <p class="signature-sign reveal reveal-d2">— The Kobuta Counter</p>
         </div>
+      </div>
+    </section>
+
+    <!-- Our Name -->
+    <section id="name" class="name-section">
+      <div class="container name-grid">
+        <div>
+          <p class="eyebrow reveal">Our Name</p>
+          <h2 class="reveal reveal-d1">店名の由来は、<br>一頭のこぶたから。</h2>
+          <p class="lead reveal reveal-d2">
+            まるい背中、ちいさな鼻、つぶらな瞳。<br>
+            こぶたは、ヨーロッパでは昔から<br>
+            「豊かさ」と「幸運」のしるしとされてきました。
+          </p>
+          <p class="lead reveal reveal-d2">
+            一杯の珈琲と、ひと皿の菓子で、<br>
+            お客様の心が、こぶたのようにまあるく満たされますように。<br>
+            そんな願いを込めて、この名前をつけました。
+          </p>
+        </div>
+        <figure class="name-figure reveal reveal-d1">
+          <div class="photo ph-kobuta" role="img" aria-label="わらの上に立つ、白いこぶた"></div>
+          <figcaption class="name-caption">— our little muse</figcaption>
+        </figure>
       </div>
     </section>
 
