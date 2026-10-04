@@ -3,675 +3,742 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>kobuta-cafe | こぶたカフェ</title>
-  <meta name="description" content="kobuta-cafe（こぶたカフェ）は、こぶたのようにまるくて、やさしい時間が流れる小さなカフェです。自家焙煎コーヒーと手づくりスイーツでお待ちしています。">
+  <title>KOBUTA CAFÉ | 珈琲と菓子の小さな店</title>
+  <meta name="description" content="KOBUTA CAFÉ は、八席だけのカウンターで、一杯ずつ淹れる珈琲と、その日の菓子をお出しする小さな店です。">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Kosugi+Maru&family=Zen+Maru+Gothic:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Shippori+Mincho:wght@400;500;600&display=swap" rel="stylesheet">
   <style>
     :root {
-      --pink: #f6b8c4;
-      --pink-deep: #e88a9c;
-      --pink-light: #fdeef1;
-      --cream: #fffaf3;
-      --brown: #6b4a3a;
-      --brown-light: #a07c68;
-      --white: #ffffff;
-      --radius: 20px;
-      --shadow: 0 6px 20px rgba(107, 74, 58, 0.1);
+      --ink: #14110f;
+      --ink-2: #1d1916;
+      --ink-3: #2a2420;
+      --ivory: #f2ece2;
+      --ivory-dim: #b9b0a3;
+      --muted: #8a8075;
+      --gold: #b89b6a;
+      --gold-soft: rgba(184, 155, 106, 0.35);
+      --line: rgba(242, 236, 226, 0.12);
+      --serif-en: "Cormorant Garamond", "Times New Roman", serif;
+      --serif-ja: "Shippori Mincho", "Hiragino Mincho ProN", "Yu Mincho", serif;
+      --ease: cubic-bezier(.2, .7, .2, 1);
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
-
     html { scroll-behavior: smooth; }
 
     body {
-      font-family: "Zen Maru Gothic", "Kosugi Maru", "Hiragino Maru Gothic ProN", sans-serif;
-      color: var(--brown);
-      background: var(--cream);
-      line-height: 1.8;
+      font-family: var(--serif-ja);
+      background: var(--ink);
+      color: var(--ivory);
+      line-height: 2;
+      letter-spacing: .06em;
+      -webkit-font-smoothing: antialiased;
     }
 
     a { color: inherit; text-decoration: none; }
-    img, svg { display: block; max-width: 100%; }
+    img { display: block; max-width: 100%; }
+    .container { width: min(1180px, 100% - 32px); margin-inline: auto; }
 
-    .container { width: min(1100px, 100% - 32px); margin-inline: auto; }
+    /* ----- 写真枠：images/ に写真が無い場合はグラデーションで代用 ----- */
+    .photo {
+      position: relative;
+      overflow: hidden;
+      background-color: var(--ink-3);
+      background-size: cover;
+      background-position: center;
+    }
+    .photo::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(20,17,15,0) 55%, rgba(20,17,15,.45) 100%);
+      pointer-events: none;
+    }
+    .ph-hero       { background-image: url("images/hero.jpg"),        radial-gradient(ellipse at 70% 40%, #4a3b2e 0%, #231c17 45%, #0f0c0a 100%); }
+    .ph-philosophy { background-image: url("images/philosophy.jpg"),  linear-gradient(160deg, #3d3128 0%, #1a1512 100%); }
+    .ph-sig1       { background-image: url("images/signature-1.jpg"), radial-gradient(circle at 50% 45%, #5a4535 0%, #1d1713 75%); }
+    .ph-sig2       { background-image: url("images/signature-2.jpg"), radial-gradient(circle at 50% 45%, #6b5a48 0%, #201a15 75%); }
+    .ph-sig3       { background-image: url("images/signature-3.jpg"), radial-gradient(circle at 50% 45%, #4e3a2c 0%, #1b1511 75%); }
+    .ph-g1         { background-image: url("images/gallery-1.jpg"),   linear-gradient(135deg, #3a2e25, #15110e); }
+    .ph-g2         { background-image: url("images/gallery-2.jpg"),   linear-gradient(135deg, #2d2722, #121010); }
+    .ph-g3         { background-image: url("images/gallery-3.jpg"),   linear-gradient(135deg, #43362b, #16120f); }
+    .ph-g4         { background-image: url("images/gallery-4.jpg"),   linear-gradient(135deg, #332a23, #110e0c); }
 
-    /* ===== Header ===== */
+    /* ----- Header ----- */
     header {
-      position: sticky;
-      top: 0;
+      position: fixed;
+      inset: 0 0 auto 0;
       z-index: 100;
-      background: rgba(255, 250, 243, 0.92);
-      backdrop-filter: blur(8px);
-      border-bottom: 2px dashed var(--pink);
+      transition: background .5s var(--ease), border-color .5s var(--ease);
+      border-bottom: 1px solid transparent;
+    }
+    header.scrolled {
+      background: rgba(20, 17, 15, .88);
+      backdrop-filter: blur(10px);
+      border-bottom-color: var(--line);
     }
     .header-inner {
+      height: 84px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      height: 68px;
     }
-    .logo {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      font-weight: 700;
-      font-size: 1.4rem;
-      letter-spacing: 0.04em;
+    .brand { display: flex; align-items: center; gap: 14px; }
+    .brand svg { width: 34px; height: 34px; }
+    .brand-name {
+      font-family: var(--serif-en);
+      font-size: 1.35rem;
+      letter-spacing: .32em;
+      font-weight: 400;
     }
-    .logo svg { width: 40px; height: 40px; }
-    nav ul { display: flex; gap: 28px; list-style: none; }
-    nav a { font-weight: 700; position: relative; padding: 4px 0; }
-    nav a::after {
-      content: "";
-      position: absolute;
-      left: 0; bottom: 0;
-      width: 0; height: 3px;
-      border-radius: 3px;
-      background: var(--pink-deep);
-      transition: width .25s;
+    nav ul { display: flex; gap: 40px; list-style: none; }
+    nav a {
+      font-family: var(--serif-en);
+      font-size: .95rem;
+      letter-spacing: .22em;
+      color: var(--ivory-dim);
+      transition: color .3s;
     }
-    nav a:hover::after { width: 100%; }
+    nav a:hover { color: var(--gold); }
+    .nav-reserve {
+      border: 1px solid var(--gold-soft);
+      padding: 8px 22px;
+      color: var(--gold) !important;
+    }
+    .nav-reserve:hover { background: var(--gold); color: var(--ink) !important; }
 
     .menu-toggle {
       display: none;
       background: none;
       border: none;
-      font-size: 1.8rem;
-      color: var(--brown);
+      width: 32px; height: 20px;
+      position: relative;
       cursor: pointer;
     }
+    .menu-toggle span {
+      position: absolute; left: 0;
+      width: 100%; height: 1px;
+      background: var(--ivory);
+      transition: transform .3s, top .3s, opacity .3s;
+    }
+    .menu-toggle span:nth-child(1) { top: 3px; }
+    .menu-toggle span:nth-child(2) { top: 16px; }
+    .menu-toggle.open span:nth-child(1) { top: 10px; transform: rotate(45deg); }
+    .menu-toggle.open span:nth-child(2) { top: 10px; transform: rotate(-45deg); }
 
-    /* ===== Hero ===== */
+    /* ----- Hero ----- */
     .hero {
-      background:
-        radial-gradient(circle at 15% 20%, var(--pink-light) 0 120px, transparent 121px),
-        radial-gradient(circle at 85% 75%, var(--pink-light) 0 160px, transparent 161px),
-        var(--cream);
-      padding: 80px 0 90px;
-      overflow: hidden;
-    }
-    .hero-inner {
+      min-height: 100vh;
+      min-height: 100svh;
       display: grid;
-      grid-template-columns: 1.1fr 1fr;
-      align-items: center;
-      gap: 40px;
+      place-items: center;
+      text-align: center;
+      position: relative;
     }
-    .hero-sub {
-      display: inline-block;
-      background: var(--pink);
-      color: var(--white);
-      font-weight: 700;
-      padding: 4px 16px;
-      border-radius: 999px;
-      margin-bottom: 18px;
-      font-size: .9rem;
+    .hero .photo { position: absolute; inset: 0; }
+    .hero .photo::after {
+      background:
+        linear-gradient(180deg, rgba(20,17,15,.55) 0%, rgba(20,17,15,.25) 40%, rgba(20,17,15,.85) 100%);
+    }
+    .hero-content { position: relative; z-index: 1; padding: 120px 16px 80px; }
+    .hero-mark { width: 64px; margin: 0 auto 36px; opacity: .9; }
+    .hero-eyebrow {
+      font-family: var(--serif-en);
+      font-style: italic;
+      color: var(--gold);
+      font-size: 1.1rem;
+      letter-spacing: .3em;
+      margin-bottom: 26px;
     }
     .hero h1 {
-      font-size: clamp(2.2rem, 5vw, 3.6rem);
-      line-height: 1.35;
-      margin-bottom: 20px;
+      font-family: var(--serif-en);
+      font-weight: 300;
+      font-size: clamp(2.8rem, 8vw, 6rem);
+      letter-spacing: .28em;
+      line-height: 1.15;
+      margin-right: -.28em; /* letter-spacing の右側の余白を相殺して中央寄せ */
     }
-    .hero h1 span { color: var(--pink-deep); }
-    .hero p { margin-bottom: 32px; font-size: 1.05rem; }
-    .btn {
-      display: inline-block;
-      background: var(--pink-deep);
-      color: var(--white);
-      font-weight: 700;
-      padding: 14px 34px;
-      border-radius: 999px;
-      box-shadow: 0 5px 0 #c96f81;
-      transition: transform .15s, box-shadow .15s;
+    .hero-ja {
+      margin-top: 28px;
+      font-size: clamp(.95rem, 1.6vw, 1.1rem);
+      letter-spacing: .4em;
+      color: var(--ivory-dim);
     }
-    .btn:hover { transform: translateY(3px); box-shadow: 0 2px 0 #c96f81; }
-    .btn-outline {
-      background: var(--white);
-      color: var(--pink-deep);
-      border: 2px solid var(--pink-deep);
-      box-shadow: none;
-      margin-left: 12px;
+    .scroll-cue {
+      position: absolute;
+      bottom: 34px; left: 50%;
+      transform: translateX(-50%);
+      z-index: 1;
+      font-family: var(--serif-en);
+      font-size: .75rem;
+      letter-spacing: .35em;
+      color: var(--ivory-dim);
+      display: flex; flex-direction: column; align-items: center; gap: 14px;
     }
-    .btn-outline:hover { box-shadow: none; background: var(--pink-light); }
-
-    .hero-pig { animation: bounce 3s ease-in-out infinite; }
-    .hero-pig svg { width: 100%; height: auto; }
-    @keyframes bounce {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-14px); }
+    .scroll-cue::after {
+      content: "";
+      width: 1px; height: 54px;
+      background: linear-gradient(var(--gold), transparent);
+      animation: drip 2.4s var(--ease) infinite;
+      transform-origin: top;
     }
-
-    /* ===== Section common ===== */
-    section { padding: 90px 0; }
-    .section-title { text-align: center; margin-bottom: 50px; }
-    .section-title .en {
-      display: block;
-      color: var(--pink-deep);
-      font-size: .95rem;
-      letter-spacing: .2em;
-      font-weight: 700;
-    }
-    .section-title h2 { font-size: clamp(1.6rem, 3.5vw, 2.2rem); }
-    .section-title h2::after {
-      content: "🐷";
-      display: block;
-      font-size: 1.2rem;
-      margin-top: 4px;
+    @keyframes drip {
+      0% { transform: scaleY(0); opacity: 1; }
+      60% { transform: scaleY(1); opacity: 1; }
+      100% { transform: scaleY(1); opacity: 0; }
     }
 
-    /* ===== Concept ===== */
-    .concept { background: var(--white); }
-    .concept-grid {
+    /* ----- Section common ----- */
+    section { padding: 160px 0; }
+    .eyebrow {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      font-family: var(--serif-en);
+      font-size: .9rem;
+      letter-spacing: .35em;
+      color: var(--gold);
+      margin-bottom: 30px;
+    }
+    .eyebrow::before { content: ""; width: 48px; height: 1px; background: var(--gold); }
+    .eyebrow.center { justify-content: center; }
+    .eyebrow.center::after { content: ""; width: 48px; height: 1px; background: var(--gold); }
+    h2 {
+      font-weight: 500;
+      font-size: clamp(1.6rem, 3.2vw, 2.4rem);
+      line-height: 1.7;
+      letter-spacing: .14em;
+    }
+    .lead { color: var(--ivory-dim); font-size: 1rem; line-height: 2.4; }
+
+    /* ----- Philosophy ----- */
+    .philosophy-grid {
+      display: grid;
+      grid-template-columns: 5fr 6fr;
+      gap: clamp(40px, 8vw, 120px);
+      align-items: center;
+    }
+    .philosophy .photo { aspect-ratio: 4 / 5; }
+    .philosophy h2 { margin-bottom: 40px; }
+    .philosophy .lead + .lead { margin-top: 24px; }
+    .signature-sign {
+      margin-top: 48px;
+      font-family: var(--serif-en);
+      font-style: italic;
+      font-size: 1.4rem;
+      color: var(--gold);
+      letter-spacing: .08em;
+    }
+
+    /* ----- Signature ----- */
+    .signature { background: var(--ink-2); }
+    .section-head { text-align: center; margin-bottom: 90px; }
+    .sig-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 28px;
+      gap: 40px;
     }
-    .concept-card {
-      background: var(--cream);
-      border-radius: var(--radius);
-      padding: 36px 28px;
+    .sig-item .photo {
+      aspect-ratio: 3 / 4;
+      margin-bottom: 30px;
+    }
+    .sig-item .photo { transition: transform 1.2s var(--ease); }
+    .sig-item:hover .photo { transform: scale(1.015); }
+    .sig-no {
+      font-family: var(--serif-en);
+      font-style: italic;
+      color: var(--gold);
+      font-size: 1.05rem;
+      letter-spacing: .2em;
+    }
+    .sig-item h3 {
+      font-weight: 500;
+      font-size: 1.2rem;
+      letter-spacing: .14em;
+      margin: 8px 0 4px;
+    }
+    .sig-en {
+      font-family: var(--serif-en);
+      font-size: .95rem;
+      color: var(--muted);
+      letter-spacing: .12em;
+      margin-bottom: 16px;
+    }
+    .sig-item p { color: var(--ivory-dim); font-size: .92rem; line-height: 2.1; }
+
+    /* ----- Menu ----- */
+    .menu-wrap { max-width: 860px; margin: 0 auto; }
+    .menu-block + .menu-block { margin-top: 90px; }
+    .menu-block h3 {
       text-align: center;
-      box-shadow: var(--shadow);
+      font-family: var(--serif-en);
+      font-weight: 400;
+      font-size: 1.6rem;
+      letter-spacing: .3em;
+      margin-bottom: 8px;
     }
-    .concept-card .icon {
-      width: 84px; height: 84px;
-      margin: 0 auto 18px;
-      border-radius: 50%;
-      background: var(--pink-light);
+    .menu-block .menu-sub {
+      text-align: center;
+      color: var(--muted);
+      font-size: .85rem;
+      margin-bottom: 44px;
+    }
+    .menu-list { list-style: none; }
+    .menu-list li {
       display: grid;
-      place-items: center;
-      font-size: 2.4rem;
+      grid-template-columns: auto 1fr auto;
+      align-items: baseline;
+      gap: 18px;
+      padding: 18px 0;
     }
-    .concept-card h3 { font-size: 1.2rem; margin-bottom: 10px; }
+    .menu-list li + li { border-top: 1px solid var(--line); }
+    .menu-name { font-size: 1.02rem; letter-spacing: .1em; }
+    .menu-name small {
+      display: block;
+      font-size: .8rem;
+      color: var(--muted);
+      letter-spacing: .06em;
+      line-height: 1.8;
+    }
+    .menu-dots { border-bottom: 1px dotted rgba(184,155,106,.4); transform: translateY(-6px); }
+    .menu-price {
+      font-family: var(--serif-en);
+      font-size: 1.2rem;
+      color: var(--gold);
+      letter-spacing: .08em;
+    }
+    .course {
+      border: 1px solid var(--gold-soft);
+      padding: 56px clamp(24px, 6vw, 72px);
+      text-align: center;
+      position: relative;
+    }
+    .course::before, .course::after {
+      content: "";
+      position: absolute;
+      width: 18px; height: 18px;
+      border: 1px solid var(--gold);
+    }
+    .course::before { top: -1px; left: -1px; border-right: 0; border-bottom: 0; }
+    .course::after { bottom: -1px; right: -1px; border-left: 0; border-top: 0; }
+    .course ol {
+      list-style: none;
+      margin: 36px 0;
+      counter-reset: c;
+    }
+    .course li {
+      counter-increment: c;
+      padding: 8px 0;
+      color: var(--ivory-dim);
+    }
+    .course li::before {
+      content: counter(c, upper-roman) ".";
+      font-family: var(--serif-en);
+      color: var(--gold);
+      margin-right: 14px;
+    }
+    .course .menu-price { font-size: 1.6rem; }
+    .note { text-align: center; color: var(--muted); font-size: .8rem; margin-top: 60px; }
 
-    /* ===== Menu ===== */
-    .menu-tabs {
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
-      gap: 12px;
-      margin-bottom: 40px;
-    }
-    .tab-btn {
-      font-family: inherit;
-      font-weight: 700;
-      font-size: 1rem;
-      color: var(--brown);
-      background: var(--white);
-      border: 2px solid var(--pink);
-      padding: 8px 24px;
-      border-radius: 999px;
-      cursor: pointer;
-      transition: background .2s, color .2s;
-    }
-    .tab-btn.active, .tab-btn:hover { background: var(--pink-deep); border-color: var(--pink-deep); color: var(--white); }
-
-    .menu-list {
+    /* ----- Gallery ----- */
+    .gallery { padding: 0; }
+    .gallery-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-      gap: 24px;
+      grid-template-columns: 2fr 1fr 1fr;
+      grid-template-rows: repeat(2, minmax(220px, 28vw));
+      gap: 6px;
     }
-    .menu-list[hidden] { display: none; }
-    .menu-item {
-      background: var(--white);
-      border-radius: var(--radius);
-      overflow: hidden;
-      box-shadow: var(--shadow);
-      transition: transform .2s;
-    }
-    .menu-item:hover { transform: translateY(-5px); }
-    .menu-thumb {
-      height: 150px;
-      display: grid;
-      place-items: center;
-      font-size: 4rem;
-    }
-    .menu-body { padding: 18px 20px 22px; }
-    .menu-body h3 { font-size: 1.1rem; display: flex; justify-content: space-between; gap: 8px; }
-    .menu-body .price { color: var(--pink-deep); white-space: nowrap; }
-    .menu-body p { font-size: .9rem; color: var(--brown-light); margin-top: 6px; }
-    .badge {
-      display: inline-block;
-      font-size: .75rem;
-      background: var(--pink-deep);
-      color: var(--white);
-      padding: 0 10px;
-      border-radius: 999px;
-      margin-bottom: 6px;
-    }
+    .gallery-grid .photo:first-child { grid-row: span 2; }
+    .gallery-grid .photo:last-child { grid-column: span 2; }
 
-    /* ===== News ===== */
-    .news { background: var(--white); }
-    .news-list { max-width: 760px; margin: 0 auto; list-style: none; }
-    .news-list li {
-      display: flex;
-      gap: 20px;
-      padding: 18px 8px;
-      border-bottom: 2px dotted var(--pink);
-    }
-    .news-list time { color: var(--pink-deep); font-weight: 700; white-space: nowrap; }
-    .news-tag {
-      font-size: .78rem;
-      background: var(--pink-light);
-      padding: 2px 10px;
-      border-radius: 999px;
-      height: fit-content;
-      white-space: nowrap;
-    }
-
-    /* ===== Access ===== */
-    .access-grid {
+    /* ----- Information ----- */
+    .info-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 40px;
-      align-items: start;
+      gap: clamp(40px, 8vw, 120px);
     }
-    .info-table { width: 100%; border-collapse: collapse; background: var(--white); border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow); }
-    .info-table th, .info-table td { padding: 16px 20px; text-align: left; border-bottom: 1px solid var(--pink-light); vertical-align: top; }
-    .info-table th { width: 30%; background: var(--pink-light); white-space: nowrap; }
-    .info-table tr:last-child th, .info-table tr:last-child td { border-bottom: none; }
-    .map {
-      border-radius: var(--radius);
-      overflow: hidden;
-      box-shadow: var(--shadow);
-      aspect-ratio: 4 / 3;
-      background: var(--white);
-    }
-    .map iframe { width: 100%; height: 100%; border: 0; }
-
-    /* ===== Contact ===== */
-    .contact { background: var(--pink-light); text-align: center; }
-    .contact p { margin-bottom: 28px; }
-    .sns { display: flex; justify-content: center; gap: 16px; margin-top: 28px; }
-    .sns a {
-      width: 52px; height: 52px;
-      border-radius: 50%;
-      background: var(--white);
-      display: grid;
-      place-items: center;
-      font-weight: 700;
-      box-shadow: var(--shadow);
-      transition: transform .2s;
-    }
-    .sns a:hover { transform: scale(1.1); }
-
-    /* ===== Footer ===== */
-    footer {
-      background: var(--brown);
-      color: var(--cream);
-      text-align: center;
-      padding: 36px 0;
+    .info-list { display: grid; grid-template-columns: 7.5em 1fr; }
+    .info-list dt, .info-list dd { padding: 20px 0; border-bottom: 1px solid var(--line); }
+    .info-list dt {
+      font-family: var(--serif-en);
+      letter-spacing: .2em;
+      color: var(--gold);
       font-size: .9rem;
     }
-    footer .logo { justify-content: center; margin-bottom: 8px; }
+    .info-list dd { color: var(--ivory-dim); font-size: .95rem; }
+    .map {
+      aspect-ratio: 1 / 1;
+      border: 1px solid var(--line);
+      background: var(--ink-2);
+    }
+    .map iframe {
+      width: 100%; height: 100%; border: 0;
+      filter: grayscale(1) invert(.92) contrast(.9) sepia(.15);
+    }
 
-    /* ===== Fade-in ===== */
-    .fade { opacity: 0; transform: translateY(24px); transition: opacity .7s, transform .7s; }
-    .fade.show { opacity: 1; transform: none; }
+    /* ----- Reservation ----- */
+    .reserve {
+      background: var(--ink-2);
+      text-align: center;
+      border-top: 1px solid var(--line);
+    }
+    .reserve h2 { margin-bottom: 30px; }
+    .reserve .lead { max-width: 620px; margin: 0 auto 60px; }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 18px;
+      padding: 20px 56px;
+      border: 1px solid var(--gold);
+      color: var(--gold);
+      font-family: var(--serif-en);
+      letter-spacing: .3em;
+      font-size: 1rem;
+      position: relative;
+      overflow: hidden;
+      transition: color .5s var(--ease);
+    }
+    .btn::before {
+      content: "";
+      position: absolute; inset: 0;
+      background: var(--gold);
+      transform: scaleX(0);
+      transform-origin: right;
+      transition: transform .5s var(--ease);
+      z-index: -1;
+    }
+    .btn:hover { color: var(--ink); }
+    .btn:hover::before { transform: scaleX(1); transform-origin: left; }
+    .btn { isolation: isolate; }
+    .reserve-tel {
+      margin-top: 36px;
+      font-family: var(--serif-en);
+      font-size: 1.5rem;
+      letter-spacing: .2em;
+    }
+    .reserve-tel small {
+      display: block;
+      font-family: var(--serif-ja);
+      font-size: .78rem;
+      color: var(--muted);
+      letter-spacing: .1em;
+    }
 
-    /* ===== Responsive ===== */
-    @media (max-width: 860px) {
+    /* ----- Footer ----- */
+    footer {
+      padding: 80px 0 50px;
+      text-align: center;
+      border-top: 1px solid var(--line);
+    }
+    footer .brand { justify-content: center; margin-bottom: 30px; }
+    .sns { display: flex; justify-content: center; gap: 36px; margin-bottom: 40px; }
+    .sns a {
+      font-family: var(--serif-en);
+      letter-spacing: .25em;
+      font-size: .85rem;
+      color: var(--ivory-dim);
+      transition: color .3s;
+    }
+    .sns a:hover { color: var(--gold); }
+    footer small {
+      font-family: var(--serif-en);
+      color: var(--muted);
+      letter-spacing: .2em;
+      font-size: .78rem;
+    }
+
+    /* ----- Reveal ----- */
+    .reveal { opacity: 0; transform: translateY(30px); transition: opacity 1.4s var(--ease), transform 1.4s var(--ease); }
+    .reveal.show { opacity: 1; transform: none; }
+    .reveal-d1 { transition-delay: .15s; }
+    .reveal-d2 { transition-delay: .3s; }
+
+    /* ----- Responsive ----- */
+    @media (max-width: 900px) {
       .menu-toggle { display: block; }
       nav {
-        position: absolute;
-        top: 68px; left: 0; right: 0;
-        background: var(--cream);
-        border-bottom: 2px dashed var(--pink);
-        display: none;
+        position: fixed;
+        inset: 84px 0 auto 0;
+        background: rgba(20, 17, 15, .97);
+        border-bottom: 1px solid var(--line);
+        opacity: 0;
+        pointer-events: none;
+        transform: translateY(-8px);
+        transition: opacity .35s, transform .35s;
       }
-      nav.open { display: block; }
-      nav ul { flex-direction: column; gap: 0; padding: 8px 16px 16px; }
-      nav li a { display: block; padding: 12px 0; }
-      .hero { padding: 50px 0 60px; }
-      .hero-inner { grid-template-columns: 1fr; text-align: center; }
-      .hero-pig { width: 100%; max-width: 280px; margin: 0 auto; order: -1; }
-      .concept-grid { grid-template-columns: 1fr; }
-      .access-grid { grid-template-columns: 1fr; }
-      section { padding: 64px 0; }
+      nav.open { opacity: 1; pointer-events: auto; transform: none; }
+      nav ul { flex-direction: column; align-items: center; gap: 0; padding: 20px 16px 36px; }
+      nav li a { display: block; padding: 14px 0; }
+      .nav-reserve { margin-top: 12px; padding: 10px 32px !important; }
+      section { padding: 110px 0; }
+      .philosophy-grid, .info-grid { grid-template-columns: 1fr; }
+      .philosophy .photo { aspect-ratio: 4 / 3; }
+      .sig-grid { grid-template-columns: 1fr; gap: 70px; }
+      .sig-item .photo { aspect-ratio: 4 / 3; }
+      .section-head { margin-bottom: 60px; }
+      .gallery-grid {
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: repeat(3, 44vw);
+      }
+      .gallery-grid .photo:first-child { grid-row: auto; grid-column: span 2; }
     }
-    @media (max-width: 480px) {
-      .btn-outline { margin: 12px 0 0; }
-      .news-list li { flex-wrap: wrap; gap: 6px 12px; }
+    @media (max-width: 520px) {
+      .brand-name { font-size: 1.1rem; letter-spacing: .24em; }
+      .menu-list li { grid-template-columns: 1fr auto; }
+      .menu-dots { display: none; }
+      .info-list { grid-template-columns: 6em 1fr; }
+      .btn { padding: 18px 36px; }
     }
     @media (prefers-reduced-motion: reduce) {
-      .hero-pig { animation: none; }
-      .fade { opacity: 1; transform: none; transition: none; }
+      .reveal { opacity: 1; transform: none; transition: none; }
+      .scroll-cue::after { animation: none; }
     }
   </style>
 </head>
 <body>
 
-  <!-- ===== Header ===== -->
+  <!-- 細い線で描いたこぶたのロゴ（ヘッダー・ヒーロー・フッターで使い回し） -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <symbol id="mark" viewBox="0 0 64 64">
+      <g fill="none" stroke="#b89b6a" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="32" cy="32" r="30.5"/>
+        <path d="M18 24 L16 13 L26 18"/>
+        <path d="M46 24 L48 13 L38 18"/>
+        <circle cx="32" cy="34" r="17"/>
+        <ellipse cx="32" cy="39" rx="7" ry="5"/>
+        <path d="M29.5 38.2 v1.6 M34.5 38.2 v1.6"/>
+        <path d="M24 30 q2 -1.6 4 0 M36 30 q2 -1.6 4 0"/>
+      </g>
+    </symbol>
+  </svg>
+
   <header>
     <div class="container header-inner">
-      <a href="#top" class="logo" aria-label="kobuta-cafe トップへ">
-        <svg viewBox="0 0 100 100" aria-hidden="true">
-          <circle cx="50" cy="54" r="38" fill="#f6b8c4"/>
-          <path d="M20 30 L28 8 L42 22 Z" fill="#e88a9c"/>
-          <path d="M80 30 L72 8 L58 22 Z" fill="#e88a9c"/>
-          <ellipse cx="50" cy="64" rx="16" ry="11" fill="#e88a9c"/>
-          <circle cx="44" cy="64" r="3" fill="#6b4a3a"/>
-          <circle cx="56" cy="64" r="3" fill="#6b4a3a"/>
-          <circle cx="36" cy="46" r="4" fill="#6b4a3a"/>
-          <circle cx="64" cy="46" r="4" fill="#6b4a3a"/>
-        </svg>
-        kobuta-cafe
+      <a href="#top" class="brand" aria-label="KOBUTA CAFÉ トップへ">
+        <svg><use href="#mark"/></svg>
+        <span class="brand-name">KOBUTA</span>
       </a>
-      <button class="menu-toggle" aria-label="メニューを開く" aria-expanded="false">☰</button>
+      <button class="menu-toggle" aria-label="メニューを開く" aria-expanded="false"><span></span><span></span></button>
       <nav>
         <ul>
-          <li><a href="#concept">コンセプト</a></li>
-          <li><a href="#menu">メニュー</a></li>
-          <li><a href="#news">お知らせ</a></li>
-          <li><a href="#access">アクセス</a></li>
-          <li><a href="#contact">ご予約</a></li>
+          <li><a href="#philosophy">Philosophy</a></li>
+          <li><a href="#signature">Signature</a></li>
+          <li><a href="#menu">Menu</a></li>
+          <li><a href="#information">Information</a></li>
+          <li><a href="#reserve" class="nav-reserve">Reserve</a></li>
         </ul>
       </nav>
     </div>
   </header>
 
   <main id="top">
-    <!-- ===== Hero ===== -->
-    <section class="hero">
-      <div class="container hero-inner">
+    <!-- Hero -->
+    <section class="hero" style="padding:0">
+      <div class="photo ph-hero" role="img" aria-label="薄暗い店内のカウンターで、ハンドドリップで淹れられる珈琲"></div>
+      <div class="hero-content">
+        <svg class="hero-mark" viewBox="0 0 64 64" aria-hidden="true"><use href="#mark"/></svg>
+        <p class="hero-eyebrow">Coffee &amp; Pâtisserie — since 2026</p>
+        <h1>KOBUTA<br>CAFÉ</h1>
+        <p class="hero-ja">八席だけの、珈琲と菓子の店</p>
+      </div>
+      <a href="#philosophy" class="scroll-cue">SCROLL</a>
+    </section>
+
+    <!-- Philosophy -->
+    <section id="philosophy" class="philosophy">
+      <div class="container philosophy-grid">
+        <div class="photo ph-philosophy reveal" role="img" aria-label="焙煎したての珈琲豆"></div>
         <div>
-          <span class="hero-sub">ちいさな、まあるいカフェ</span>
-          <h1>ほっと、ひと息。<br><span>こぶた</span>みたいに<br>まあるい時間を。</h1>
-          <p>自家焙煎のコーヒーと、毎朝焼きあげる手づくりスイーツ。<br>
-            kobuta-cafe は、街の片すみにある小さなカフェです。</p>
-          <a href="#menu" class="btn">メニューを見る</a>
-          <a href="#access" class="btn btn-outline">アクセス</a>
-        </div>
-        <div class="hero-pig">
-          <svg viewBox="0 0 300 280" role="img" aria-label="コーヒーカップを持つこぶたのイラスト">
-            <!-- shadow -->
-            <ellipse cx="150" cy="262" rx="90" ry="12" fill="#f0dccf"/>
-            <!-- body -->
-            <ellipse cx="150" cy="190" rx="95" ry="70" fill="#f6b8c4"/>
-            <!-- head -->
-            <circle cx="150" cy="115" r="80" fill="#f9c6d0"/>
-            <!-- ears -->
-            <path d="M85 60 Q78 15 115 40 Z" fill="#e88a9c"/>
-            <path d="M215 60 Q222 15 185 40 Z" fill="#e88a9c"/>
-            <!-- cheeks -->
-            <ellipse cx="98" cy="135" rx="14" ry="9" fill="#f29fb0" opacity=".7"/>
-            <ellipse cx="202" cy="135" rx="14" ry="9" fill="#f29fb0" opacity=".7"/>
-            <!-- eyes -->
-            <path d="M112 108 Q122 98 132 108" stroke="#6b4a3a" stroke-width="5" fill="none" stroke-linecap="round"/>
-            <path d="M168 108 Q178 98 188 108" stroke="#6b4a3a" stroke-width="5" fill="none" stroke-linecap="round"/>
-            <!-- snout -->
-            <ellipse cx="150" cy="140" rx="30" ry="21" fill="#e88a9c"/>
-            <ellipse cx="140" cy="140" rx="5" ry="7" fill="#6b4a3a"/>
-            <ellipse cx="160" cy="140" rx="5" ry="7" fill="#6b4a3a"/>
-            <!-- cup -->
-            <path d="M118 185 h64 v34 a20 20 0 0 1 -20 20 h-24 a20 20 0 0 1 -20 -20 z" fill="#ffffff" stroke="#6b4a3a" stroke-width="4"/>
-            <path d="M182 195 q20 0 20 14 q0 14 -20 14" fill="none" stroke="#6b4a3a" stroke-width="4"/>
-            <rect x="118" y="185" width="64" height="10" fill="#a07c68"/>
-            <!-- hands -->
-            <ellipse cx="112" cy="210" rx="14" ry="11" fill="#f9c6d0"/>
-            <ellipse cx="188" cy="226" rx="14" ry="11" fill="#f9c6d0"/>
-            <!-- steam -->
-            <path d="M138 181 q-5 -6 0 -13" stroke="#c9b3a6" stroke-width="4" fill="none" stroke-linecap="round"/>
-            <path d="M162 181 q5 -6 0 -13" stroke="#c9b3a6" stroke-width="4" fill="none" stroke-linecap="round"/>
-          </svg>
+          <p class="eyebrow reveal">Philosophy</p>
+          <h2 class="reveal reveal-d1">一杯のために、<br>ただ静かに手をかける。</h2>
+          <p class="lead reveal reveal-d2">
+            小さな焙煎機で、その週に使う分だけを焼く。<br>
+            湯を落とす速さは、豆の声を聞いて決める。<br>
+            菓子は朝のうちに、その日の数だけ。
+          </p>
+          <p class="lead reveal reveal-d2">
+            カウンターは八席。急がず、騒がず。<br>
+            こぶたのように、まるく満ち足りた時間をお届けします。
+          </p>
+          <p class="signature-sign reveal reveal-d2">— The Kobuta Counter</p>
         </div>
       </div>
     </section>
 
-    <!-- ===== Concept ===== -->
-    <section id="concept" class="concept">
+    <!-- Signature -->
+    <section id="signature" class="signature">
       <div class="container">
-        <div class="section-title fade">
-          <span class="en">CONCEPT</span>
-          <h2>こぶたカフェのこだわり</h2>
+        <div class="section-head">
+          <p class="eyebrow center reveal">Signature</p>
+          <h2 class="reveal reveal-d1">当店を象徴する、三つの品</h2>
         </div>
-        <div class="concept-grid">
-          <div class="concept-card fade">
-            <div class="icon">☕</div>
-            <h3>自家焙煎コーヒー</h3>
-            <p>店内で少しずつ焙煎した豆を、一杯ずつハンドドリップ。まろやかで飲みやすい味わいです。</p>
-          </div>
-          <div class="concept-card fade">
-            <div class="icon">🧁</div>
-            <h3>手づくりスイーツ</h3>
-            <p>毎朝お店で焼きあげるケーキや焼き菓子。素材はできるだけ国産のものを選んでいます。</p>
-          </div>
-          <div class="concept-card fade">
-            <div class="icon">🛋️</div>
-            <h3>まあるい空間</h3>
-            <p>ふかふかのソファと木のぬくもり。おひとりさまも、お子さま連れも、ゆっくりどうぞ。</p>
-          </div>
+        <div class="sig-grid">
+          <article class="sig-item reveal">
+            <div class="photo ph-sig1" role="img" aria-label="ネルドリップで淹れた深煎りの珈琲"></div>
+            <p class="sig-no">No. 01</p>
+            <h3>こぶたブレンド</h3>
+            <p class="sig-en">Kobuta House Blend</p>
+            <p>エチオピアとグアテマラを深煎りで。ネルで一杯ずつ落とす、とろりと甘い余韻の一杯。</p>
+          </article>
+          <article class="sig-item reveal reveal-d1">
+            <div class="photo ph-sig2" role="img" aria-label="ほろ苦いカラメルをまとった固めのプリン"></div>
+            <p class="sig-no">No. 02</p>
+            <h3>焦がしカラメルのプリン</h3>
+            <p class="sig-en">Crème Caramel</p>
+            <p>平飼い卵と和三盆。深く焦がしたカラメルが、珈琲の苦みと静かに響きあいます。</p>
+          </article>
+          <article class="sig-item reveal reveal-d2">
+            <div class="photo ph-sig3" role="img" aria-label="季節の果実をのせたタルト"></div>
+            <p class="sig-no">No. 03</p>
+            <h3>季節の果実のタルト</h3>
+            <p class="sig-en">Seasonal Fruit Tart</p>
+            <p>契約農家から届く旬の果実を、焦がしバターのタルト生地に。季節ごとに姿を変えます。</p>
+          </article>
         </div>
       </div>
     </section>
 
-    <!-- ===== Menu ===== -->
+    <!-- Menu -->
     <section id="menu">
-      <div class="container">
-        <div class="section-title fade">
-          <span class="en">MENU</span>
-          <h2>メニュー</h2>
+      <div class="container menu-wrap">
+        <div class="section-head">
+          <p class="eyebrow center reveal">Menu</p>
+          <h2 class="reveal reveal-d1">お品書き</h2>
         </div>
 
-        <div class="menu-tabs" role="tablist">
-          <button class="tab-btn active" role="tab" aria-selected="true" data-target="drink">ドリンク</button>
-          <button class="tab-btn" role="tab" aria-selected="false" data-target="sweets">スイーツ</button>
-          <button class="tab-btn" role="tab" aria-selected="false" data-target="food">フード</button>
+        <div class="menu-block reveal">
+          <h3>Coffee</h3>
+          <p class="menu-sub">すべてハンドドリップでお淹れします</p>
+          <ul class="menu-list">
+            <li><span class="menu-name">こぶたブレンド<small>深煎り・ネルドリップ</small></span><span class="menu-dots"></span><span class="menu-price">¥900</span></li>
+            <li><span class="menu-name">本日のシングルオリジン<small>産地・焙煎度はスタッフにお尋ねください</small></span><span class="menu-dots"></span><span class="menu-price">¥1,100〜</span></li>
+            <li><span class="menu-name">カフェ・オ・レ<small>低温殺菌牛乳で</small></span><span class="menu-dots"></span><span class="menu-price">¥1,000</span></li>
+            <li><span class="menu-name">珈琲の飲み比べ<small>三種・各70ml</small></span><span class="menu-dots"></span><span class="menu-price">¥1,800</span></li>
+          </ul>
         </div>
 
-        <div class="menu-list" id="drink" role="tabpanel">
-          <article class="menu-item">
-            <div class="menu-thumb" style="background:#f3e6dc">☕</div>
-            <div class="menu-body">
-              <span class="badge">人気No.1</span>
-              <h3>こぶたブレンド <span class="price">¥550</span></h3>
-              <p>やさしい苦みとコクの、当店オリジナルブレンド。</p>
-            </div>
-          </article>
-          <article class="menu-item">
-            <div class="menu-thumb" style="background:#fdeef1">🍓</div>
-            <div class="menu-body">
-              <h3>いちごミルク <span class="price">¥650</span></h3>
-              <p>自家製いちごソースたっぷりの、ピンク色のミルク。</p>
-            </div>
-          </article>
-          <article class="menu-item">
-            <div class="menu-thumb" style="background:#f6efe6">🥛</div>
-            <div class="menu-body">
-              <h3>ぶたラテ <span class="price">¥600</span></h3>
-              <p>こぶたのラテアートでお出しするカフェラテ。</p>
-            </div>
-          </article>
-          <article class="menu-item">
-            <div class="menu-thumb" style="background:#eaf3e4">🍵</div>
-            <div class="menu-body">
-              <h3>ほうじ茶ラテ <span class="price">¥580</span></h3>
-              <p>香ばしいほうじ茶と、まろやかなミルクの組み合わせ。</p>
-            </div>
-          </article>
+        <div class="menu-block reveal">
+          <h3>Pâtisserie</h3>
+          <p class="menu-sub">数に限りがございます</p>
+          <ul class="menu-list">
+            <li><span class="menu-name">焦がしカラメルのプリン</span><span class="menu-dots"></span><span class="menu-price">¥850</span></li>
+            <li><span class="menu-name">季節の果実のタルト</span><span class="menu-dots"></span><span class="menu-price">¥1,200</span></li>
+            <li><span class="menu-name">ガトーショコラ<small>珈琲とカカオ70%</small></span><span class="menu-dots"></span><span class="menu-price">¥950</span></li>
+          </ul>
         </div>
 
-        <div class="menu-list" id="sweets" role="tabpanel" hidden>
-          <article class="menu-item">
-            <div class="menu-thumb" style="background:#fdeef1">🐷</div>
-            <div class="menu-body">
-              <span class="badge">看板メニュー</span>
-              <h3>こぶたパンケーキ <span class="price">¥980</span></h3>
-              <p>ふわふわ2段のパンケーキに、こぶたのお顔を添えて。</p>
-            </div>
-          </article>
-          <article class="menu-item">
-            <div class="menu-thumb" style="background:#fff3d6">🍮</div>
-            <div class="menu-body">
-              <h3>かためプリン <span class="price">¥520</span></h3>
-              <p>昔ながらのしっかり食感と、ほろ苦カラメル。</p>
-            </div>
-          </article>
-          <article class="menu-item">
-            <div class="menu-thumb" style="background:#f3e6dc">🍰</div>
-            <div class="menu-body">
-              <h3>本日のケーキ <span class="price">¥550〜</span></h3>
-              <p>季節の果物を使ったケーキを日替わりでご用意。</p>
-            </div>
-          </article>
-          <article class="menu-item">
-            <div class="menu-thumb" style="background:#f6efe6">🍪</div>
-            <div class="menu-body">
-              <h3>ぶたさんクッキー <span class="price">¥300</span></h3>
-              <p>テイクアウトもできる、こぶた型のバタークッキー。</p>
-            </div>
-          </article>
-        </div>
-
-        <div class="menu-list" id="food" role="tabpanel" hidden>
-          <article class="menu-item">
-            <div class="menu-thumb" style="background:#fff3d6">🥪</div>
-            <div class="menu-body">
-              <h3>たまごサンド <span class="price">¥750</span></h3>
-              <p>ふわふわ卵焼きをはさんだ、厚焼きたまごサンド。</p>
-            </div>
-          </article>
-          <article class="menu-item">
-            <div class="menu-thumb" style="background:#f3e6dc">🍛</div>
-            <div class="menu-body">
-              <span class="badge">ランチ限定</span>
-              <h3>こぶたキーマカレー <span class="price">¥1,100</span></h3>
-              <p>国産豚ひき肉と野菜をじっくり煮込んだ、まろやかカレー。</p>
-            </div>
-          </article>
-          <article class="menu-item">
-            <div class="menu-thumb" style="background:#eaf3e4">🥗</div>
-            <div class="menu-body">
-              <h3>季節のサラダプレート <span class="price">¥980</span></h3>
-              <p>旬の野菜と自家製パンを盛り合わせたプレート。</p>
-            </div>
-          </article>
-        </div>
-
-        <p style="text-align:center; margin-top:28px; font-size:.85rem; color:var(--brown-light);">※価格はすべて税込です。</p>
-      </div>
-    </section>
-
-    <!-- ===== News ===== -->
-    <section id="news" class="news">
-      <div class="container">
-        <div class="section-title fade">
-          <span class="en">NEWS</span>
-          <h2>お知らせ</h2>
-        </div>
-        <ul class="news-list fade">
-          <li>
-            <time datetime="2026-10-01">2026.10.01</time>
-            <span class="news-tag">メニュー</span>
-            <span>秋限定「さつまいもとマロンのパンケーキ」がはじまりました🍠</span>
-          </li>
-          <li>
-            <time datetime="2026-09-20">2026.09.20</time>
-            <span class="news-tag">お休み</span>
-            <span>10月の定休日のお知らせ（毎週火曜日・第3水曜日）</span>
-          </li>
-          <li>
-            <time datetime="2026-09-05">2026.09.05</time>
-            <span class="news-tag">イベント</span>
-            <span>ラテアート体験会を開催します。ご予約はお電話にて承ります。</span>
-          </li>
-        </ul>
-      </div>
-    </section>
-
-    <!-- ===== Access ===== -->
-    <section id="access">
-      <div class="container">
-        <div class="section-title fade">
-          <span class="en">ACCESS</span>
-          <h2>店舗情報・アクセス</h2>
-        </div>
-        <div class="access-grid fade">
-          <table class="info-table">
-            <tr><th>店名</th><td>kobuta-cafe（こぶたカフェ）</td></tr>
-            <tr><th>住所</th><td>〒000-0000<br>○○県○○市○○町1-2-3</td></tr>
-            <tr><th>営業時間</th><td>10:00〜18:00（L.O. 17:30）<br>ランチ 11:30〜14:00</td></tr>
-            <tr><th>定休日</th><td>毎週火曜日・第3水曜日</td></tr>
-            <tr><th>電話番号</th><td><a href="tel:000-0000-0000">000-0000-0000</a></td></tr>
-            <tr><th>席数</th><td>20席（ソファ席あり・ベビーカーOK）</td></tr>
-            <tr><th>アクセス</th><td>○○駅 南口から徒歩5分</td></tr>
-          </table>
-          <div class="map">
-            <iframe
-              title="kobuta-cafe の地図"
-              src="https://www.google.com/maps?q=Tokyo%20Station&output=embed"
-              loading="lazy"
-              referrerpolicy="no-referrer-when-downgrade"></iframe>
+        <div class="menu-block reveal">
+          <div class="course">
+            <p class="eyebrow center">Counter Course</p>
+            <h3 style="margin-bottom:0">珈琲と菓子のコース</h3>
+            <ol>
+              <li>ウェルカムの一口菓子</li>
+              <li>浅煎りシングルオリジン</li>
+              <li>本日の皿盛りデセール</li>
+              <li>深煎りブレンドと小菓子</li>
+            </ol>
+            <span class="menu-price">¥5,500</span>
+            <p class="menu-sub" style="margin:10px 0 0">金・土・日 15:00〜 ／ 完全予約制（各日四名様まで）</p>
           </div>
         </div>
+
+        <p class="note">表示価格はすべて税込です。</p>
       </div>
     </section>
 
-    <!-- ===== Contact ===== -->
-    <section id="contact" class="contact">
-      <div class="container fade">
-        <div class="section-title">
-          <span class="en">RESERVATION</span>
-          <h2>ご予約・お問い合わせ</h2>
+    <!-- Gallery -->
+    <section class="gallery" aria-label="店内の様子">
+      <div class="gallery-grid">
+        <div class="photo ph-g1 reveal" role="img" aria-label="木のカウンター席"></div>
+        <div class="photo ph-g2 reveal reveal-d1" role="img" aria-label="珈琲を淹れる手元"></div>
+        <div class="photo ph-g3 reveal reveal-d2" role="img" aria-label="ショーケースに並ぶ菓子"></div>
+        <div class="photo ph-g4 reveal reveal-d1" role="img" aria-label="窓から光が差し込む店内"></div>
+      </div>
+    </section>
+
+    <!-- Information -->
+    <section id="information">
+      <div class="container info-grid">
+        <div>
+          <p class="eyebrow reveal">Information</p>
+          <h2 class="reveal reveal-d1" style="margin-bottom:40px">店舗のご案内</h2>
+          <dl class="info-list reveal reveal-d2">
+            <dt>Name</dt><dd>KOBUTA CAFÉ（こぶたカフェ）</dd>
+            <dt>Address</dt><dd>〒000-0000<br>○○県○○市○○町1-2-3 1F</dd>
+            <dt>Open</dt><dd>11:00 — 19:00（L.O. 18:30）</dd>
+            <dt>Closed</dt><dd>火曜日・第三水曜日</dd>
+            <dt>Seats</dt><dd>カウンター八席</dd>
+            <dt>Access</dt><dd>○○駅 南口より徒歩五分</dd>
+            <dt>Notes</dt><dd>小学生未満のお子様のご入店はご遠慮いただいております。</dd>
+          </dl>
         </div>
-        <p>お席のご予約、ケーキのお取り置きはお電話またはSNSのDMにて承ります。<br>
-          みなさまのご来店を、こぶた一同こころよりお待ちしております。</p>
-        <a href="tel:000-0000-0000" class="btn">📞 電話で予約する</a>
-        <div class="sns">
-          <a href="#" aria-label="Instagram">IG</a>
-          <a href="#" aria-label="X（旧Twitter）">X</a>
-          <a href="#" aria-label="LINE">LINE</a>
+        <div class="map reveal reveal-d1">
+          <iframe
+            title="KOBUTA CAFÉ の地図"
+            src="https://www.google.com/maps?q=Tokyo%20Station&output=embed"
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"></iframe>
         </div>
+      </div>
+    </section>
+
+    <!-- Reservation -->
+    <section id="reserve" class="reserve">
+      <div class="container">
+        <p class="eyebrow center reveal">Reservation</p>
+        <h2 class="reveal reveal-d1">ご予約</h2>
+        <p class="lead reveal reveal-d2">
+          席数に限りがあるため、ご予約のお客様を優先してご案内しております。<br>
+          コースは前日までのご予約をお願いいたします。
+        </p>
+        <a href="tel:000-0000-0000" class="btn reveal">RESERVE <span aria-hidden="true">→</span></a>
+        <p class="reserve-tel reveal">000-0000-0000<small>受付 11:00 — 18:00（定休日を除く）</small></p>
       </div>
     </section>
   </main>
 
-  <!-- ===== Footer ===== -->
   <footer>
     <div class="container">
-      <div class="logo">🐷 kobuta-cafe</div>
-      <small>&copy; <span id="year">2026</span> kobuta-cafe All Rights Reserved.</small>
+      <a href="#top" class="brand" aria-label="KOBUTA CAFÉ トップへ">
+        <svg><use href="#mark"/></svg>
+        <span class="brand-name">KOBUTA CAFÉ</span>
+      </a>
+      <div class="sns">
+        <a href="#">INSTAGRAM</a>
+        <a href="#">X</a>
+        <a href="#">LINE</a>
+      </div>
+      <small>&copy; <span id="year">2026</span> KOBUTA CAFÉ</small>
     </div>
   </footer>
 
   <script>
-    // スマホ用メニュー開閉
+    // ヘッダー：スクロールしたら背景をつける
+    const header = document.querySelector('header');
+    const onScroll = () => header.classList.toggle('scrolled', window.scrollY > 40);
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+
+    // スマホ用メニュー
     const toggle = document.querySelector('.menu-toggle');
     const nav = document.querySelector('nav');
-    toggle.addEventListener('click', () => {
-      const open = nav.classList.toggle('open');
+    const setNav = open => {
+      nav.classList.toggle('open', open);
+      toggle.classList.toggle('open', open);
       toggle.setAttribute('aria-expanded', open);
-      toggle.textContent = open ? '✕' : '☰';
-    });
-    nav.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
-      nav.classList.remove('open');
-      toggle.setAttribute('aria-expanded', 'false');
-      toggle.textContent = '☰';
-    }));
+    };
+    toggle.addEventListener('click', () => setNav(!nav.classList.contains('open')));
+    nav.querySelectorAll('a').forEach(a => a.addEventListener('click', () => setNav(false)));
 
-    // メニューのタブ切り替え
-    const tabs = document.querySelectorAll('.tab-btn');
-    tabs.forEach(tab => tab.addEventListener('click', () => {
-      tabs.forEach(t => {
-        t.classList.toggle('active', t === tab);
-        t.setAttribute('aria-selected', t === tab);
-        document.getElementById(t.dataset.target).hidden = t !== tab;
-      });
-    }));
-
-    // スクロールでふわっと表示
-    const observer = new IntersectionObserver(entries => {
+    // スクロールでゆっくり表示
+    const io = new IntersectionObserver(entries => {
       entries.forEach(e => {
-        if (e.isIntersecting) {
-          e.target.classList.add('show');
-          observer.unobserve(e.target);
-        }
+        if (e.isIntersecting) { e.target.classList.add('show'); io.unobserve(e.target); }
       });
-    }, { threshold: 0.15 });
-    document.querySelectorAll('.fade').forEach(el => observer.observe(el));
+    }, { threshold: 0.12 });
+    document.querySelectorAll('.reveal').forEach(el => io.observe(el));
 
-    // コピーライトの年を自動更新
     document.getElementById('year').textContent = new Date().getFullYear();
   </script>
 </body>
