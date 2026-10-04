@@ -20,3 +20,15 @@ Unsplash ライセンスにより、商用利用も含めて無料で使えま�
 同じファイル名で写真を上書きするだけで、ホームページに反映されます。
 お店で撮った実際の写真に替えるのがいちばんおすすめです。
 暗めでコントラストの強い写真（ローキー）を選ぶと、高級感が出ます。
+
+## お品書き（メニュー）の写真
+
+| ファイル名 | メニュー | 元の写真 |
+|---|---|---|
+| menu-blend.jpg | こぶたブレンド | https://images.unsplash.com/photo-1611162458324-aae1eb4129a4 |
+| menu-single-origin.jpg | 本日のシングルオリジン | https://images.unsplash.com/photo-1610632380989-680fe40816c6 |
+| menu-cafe-au-lait.jpg | カフェ・オ・レ | https://images.unsplash.com/photo-1595434091143-b375ced5fe5c |
+| menu-flight.jpg | 珈琲の飲み比べ | https://images.unsplash.com/photo-1498804103079-a6351b050096 |
+| menu-kouglof.jpg | カカオのクグロフ | https://images.unsplash.com/photo-1541783245831-57d6fb0926d3 |
+| menu-framboise.jpg | フランボワーズのガトー | https://images.unsplash.com/photo-1565958011703-44f9829ba187 |
+| menu-tiramisu.jpg | 珈琲のティラミス | https://images.unsplash.com/photo-1624001934657-640af7e2c599 |

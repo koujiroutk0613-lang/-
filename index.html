@@ -287,10 +287,18 @@
     .menu-list { list-style: none; }
     .menu-list li {
       display: grid;
-      grid-template-columns: auto 1fr auto;
-      align-items: baseline;
-      gap: 18px;
-      padding: 18px 0;
+      grid-template-columns: 96px auto 1fr auto;
+      align-items: center;
+      gap: 24px;
+      padding: 22px 0;
+    }
+    .menu-thumb {
+      width: 96px;
+      height: 96px;
+      object-fit: cover;
+      filter: saturate(.85) contrast(1.05);
+      outline: 1px solid var(--gold-soft);
+      outline-offset: 4px;
     }
     .menu-list li + li { border-top: 1px solid var(--line); }
     .menu-name { font-size: 1.02rem; letter-spacing: .1em; }
@@ -301,7 +309,7 @@
       letter-spacing: .06em;
       line-height: 1.8;
     }
-    .menu-dots { border-bottom: 1px dotted rgba(184,155,106,.4); transform: translateY(-6px); }
+    .menu-dots { border-bottom: 1px dotted rgba(184,155,106,.4); }
     .menu-price {
       font-family: var(--serif-en);
       font-size: 1.2rem;
@@ -485,7 +493,8 @@
     }
     @media (max-width: 520px) {
       .brand-name { font-size: 1.1rem; letter-spacing: .24em; }
-      .menu-list li { grid-template-columns: 1fr auto; }
+      .menu-list li { grid-template-columns: 68px 1fr auto; gap: 16px; }
+      .menu-thumb { width: 68px; height: 68px; }
       .menu-dots { display: none; }
       .info-list { grid-template-columns: 6em 1fr; }
       .btn { padding: 18px 36px; }
@@ -611,10 +620,10 @@
           <h3>Coffee</h3>
           <p class="menu-sub">すべてハンドドリップでお淹れします</p>
           <ul class="menu-list">
-            <li><span class="menu-name">こぶたブレンド<small>深煎り・ネルドリップ</small></span><span class="menu-dots"></span><span class="menu-price">¥900</span></li>
-            <li><span class="menu-name">本日のシングルオリジン<small>産地・焙煎度はスタッフにお尋ねください</small></span><span class="menu-dots"></span><span class="menu-price">¥1,100〜</span></li>
-            <li><span class="menu-name">カフェ・オ・レ<small>低温殺菌牛乳で</small></span><span class="menu-dots"></span><span class="menu-price">¥1,000</span></li>
-            <li><span class="menu-name">珈琲の飲み比べ<small>三種・各70ml</small></span><span class="menu-dots"></span><span class="menu-price">¥1,800</span></li>
+            <li><img class="menu-thumb" src="images/menu-blend.jpg" alt="ネルドリップで淹れたブラックコーヒー" loading="lazy"><span class="menu-name">こぶたブレンド<small>深煎り・ネルドリップ</small></span><span class="menu-dots"></span><span class="menu-price">¥900</span></li>
+            <li><img class="menu-thumb" src="images/menu-single-origin.jpg" alt="珈琲豆に囲まれたカップ" loading="lazy"><span class="menu-name">本日のシングルオリジン<small>産地・焙煎度はスタッフにお尋ねください</small></span><span class="menu-dots"></span><span class="menu-price">¥1,100〜</span></li>
+            <li><img class="menu-thumb" src="images/menu-cafe-au-lait.jpg" alt="白いカップのカフェ・オ・レ" loading="lazy"><span class="menu-name">カフェ・オ・レ<small>低温殺菌牛乳で</small></span><span class="menu-dots"></span><span class="menu-price">¥1,000</span></li>
+            <li><img class="menu-thumb" src="images/menu-flight.jpg" alt="いくつも並んだ珈琲のカップ" loading="lazy"><span class="menu-name">珈琲の飲み比べ<small>三種・各70ml</small></span><span class="menu-dots"></span><span class="menu-price">¥1,800</span></li>
           </ul>
         </div>
 
@@ -622,9 +631,9 @@
           <h3>Pâtisserie</h3>
           <p class="menu-sub">数に限りがございます</p>
           <ul class="menu-list">
-            <li><span class="menu-name">カカオのクグロフ<small>カカオ70%</small></span><span class="menu-dots"></span><span class="menu-price">¥950</span></li>
-            <li><span class="menu-name">フランボワーズのガトー<small>果実は季節で替わります</small></span><span class="menu-dots"></span><span class="menu-price">¥1,200</span></li>
-            <li><span class="menu-name">焦がしカラメルのプリン</span><span class="menu-dots"></span><span class="menu-price">¥850</span></li>
+            <li><img class="menu-thumb" src="images/menu-kouglof.jpg" alt="チョコレートのクグロフ" loading="lazy"><span class="menu-name">カカオのクグロフ<small>カカオ70%</small></span><span class="menu-dots"></span><span class="menu-price">¥950</span></li>
+            <li><img class="menu-thumb" src="images/menu-framboise.jpg" alt="フランボワーズのケーキ" loading="lazy"><span class="menu-name">フランボワーズのガトー<small>果実は季節で替わります</small></span><span class="menu-dots"></span><span class="menu-price">¥1,200</span></li>
+            <li><img class="menu-thumb" src="images/menu-tiramisu.jpg" alt="珈琲のティラミス" loading="lazy"><span class="menu-name">珈琲のティラミス<small>こぶたブレンドをたっぷり染みこませて</small></span><span class="menu-dots"></span><span class="menu-price">¥900</span></li>
           </ul>
         </div>
 
