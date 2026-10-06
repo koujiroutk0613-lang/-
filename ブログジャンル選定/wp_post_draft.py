@@ -6,7 +6,8 @@
 
 使い方:
     python3 wp_post_draft.py 記事.md [アイキャッチ画像.png]
-    python3 wp_post_draft.py --update 投稿ID 記事.md   (既存の投稿のタイトルと本文だけを上書き)
+    python3 wp_post_draft.py --update 投稿ID 記事.md [アイキャッチ画像.png]
+        (既存の投稿のタイトルと本文を上書き。画像を指定したときだけアイキャッチも差し替える)
 """
 import base64
 import html
@@ -16,8 +17,8 @@ import os
 import re
 import sys
 import urllib.error
-import urllib.parse
 import urllib.request
+import uuid
 
 
 def env(name):
@@ -43,6 +44,24 @@ def request(method, path, data=None, headers=None):
             return json.load(res)
     except urllib.error.HTTPError as e:
         sys.exit(f"WordPressがエラーを返しました: HTTP {e.code} {e.read()[:300]!r}")
+
+
+def upload_image(image_path):
+    # 生のバイナリ送信はサーバーのWAFに拒否されるため、管理画面と同じmultipart形式で送る
+    filename = os.path.basename(image_path).replace('"', "")
+    mime = mimetypes.guess_type(image_path)[0] or "application/octet-stream"
+    boundary = uuid.uuid4().hex
+    with open(image_path, "rb") as f:
+        data = (
+            f"--{boundary}\r\n"
+            f'Content-Disposition: form-data; name="file"; filename="{filename}"\r\n'
+            f"Content-Type: {mime}\r\n\r\n"
+        ).encode() + f.read() + f"\r\n--{boundary}--\r\n".encode()
+    media = request("POST", "/media", data=data, headers={
+        "Content-Type": f"multipart/form-data; boundary={boundary}",
+    })
+    print(f"画像をアップロードしました (メディアID: {media['id']})")
+    return media["id"]
 
 
 def md_to_html(md):
@@ -98,9 +117,12 @@ def main():
     body = md_to_html(md[title_match.end():])
 
     if update_id:
-        # 状態(下書き/公開)とアイキャッチ画像は変えない
+        # 状態(下書き/公開)は変えない。アイキャッチ画像は指定されたときだけ差し替える
+        fields = {"title": title, "content": body}
+        if len(args) > 1:
+            fields["featured_media"] = upload_image(args[1])
         updated = request("POST", f"/posts/{update_id}",
-                          data=json.dumps({"title": title, "content": body}).encode(),
+                          data=json.dumps(fields).encode(),
                           headers={"Content-Type": "application/json"})
         print(f"投稿を更新しました (投稿ID: {updated['id']}, 状態: {updated['status']})")
         return
@@ -108,16 +130,7 @@ def main():
     post = {"title": title, "content": body, "status": "draft"}
 
     if len(args) > 1:
-        image_path = args[1]
-        filename = urllib.parse.quote(os.path.basename(image_path))
-        mime = mimetypes.guess_type(image_path)[0] or "application/octet-stream"
-        with open(image_path, "rb") as f:
-            media = request("POST", "/media", data=f.read(), headers={
-                "Content-Type": mime,
-                "Content-Disposition": f"attachment; filename*=UTF-8''{filename}",
-            })
-        post["featured_media"] = media["id"]
-        print(f"画像をアップロードしました (メディアID: {media['id']})")
+        post["featured_media"] = upload_image(args[1])
 
     created = request("POST", "/posts", data=json.dumps(post).encode(),
                       headers={"Content-Type": "application/json"})
