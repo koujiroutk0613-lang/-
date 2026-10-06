@@ -6,6 +6,7 @@
 
 使い方:
     python3 wp_post_draft.py 記事.md [アイキャッチ画像.png]
+    python3 wp_post_draft.py --update 投稿ID 記事.md   (既存の投稿のタイトルと本文だけを上書き)
 """
 import base64
 import html
@@ -81,19 +82,33 @@ def md_to_html(md):
 
 
 def main():
-    if len(sys.argv) < 2:
+    args = sys.argv[1:]
+    update_id = None
+    if args[:1] == ["--update"]:
+        if len(args) < 3:
+            sys.exit(__doc__)
+        update_id, args = args[1], args[2:]
+    if not args:
         sys.exit(__doc__)
-    md = open(sys.argv[1], encoding="utf-8").read()
+    md = open(args[0], encoding="utf-8").read()
     title_match = re.match(r"^#\s+(.*)", md)
     if not title_match:
         sys.exit("1行目に「# タイトル」が必要です")
     title = title_match.group(1).strip()
     body = md_to_html(md[title_match.end():])
 
+    if update_id:
+        # 状態(下書き/公開)とアイキャッチ画像は変えない
+        updated = request("POST", f"/posts/{update_id}",
+                          data=json.dumps({"title": title, "content": body}).encode(),
+                          headers={"Content-Type": "application/json"})
+        print(f"投稿を更新しました (投稿ID: {updated['id']}, 状態: {updated['status']})")
+        return
+
     post = {"title": title, "content": body, "status": "draft"}
 
-    if len(sys.argv) > 2:
-        image_path = sys.argv[2]
+    if len(args) > 1:
+        image_path = args[1]
         filename = urllib.parse.quote(os.path.basename(image_path))
         mime = mimetypes.guess_type(image_path)[0] or "application/octet-stream"
         with open(image_path, "rb") as f:
