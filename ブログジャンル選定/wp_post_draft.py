@@ -64,13 +64,18 @@ def upload_image(image_path):
     return media["id"]
 
 
+def inline(text):
+    """エスケープしたうえで **太字** だけを <strong> にする。"""
+    return re.sub(r"\*\*(.+?)\*\*", r"<strong>\1</strong>", html.escape(text))
+
+
 def md_to_html(md):
-    """見出し・段落・箇条書き・HTMLコメントだけを扱う簡易変換。"""
+    """見出し・段落・箇条書き・太字・HTMLコメントだけを扱う簡易変換。"""
     out, para, items = [], [], []
 
     def flush():
         if para:
-            out.append("<p>" + "".join(para) + "</p>")
+            out.append("<p>" + "<br>".join(para) + "</p>")
             para.clear()
         if items:
             out.append("<ul>" + "".join(f"<li>{i}</li>" for i in items) + "</ul>")
@@ -91,11 +96,11 @@ def md_to_html(md):
         elif s.startswith("- "):
             if para:
                 flush()
-            items.append(html.escape(s[2:]))
+            items.append(inline(s[2:]))
         else:
             if items:
                 flush()
-            para.append(html.escape(s))
+            para.append(inline(s))
     flush()
     return "\n".join(out)
 
