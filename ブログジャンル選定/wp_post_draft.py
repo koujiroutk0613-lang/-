@@ -7,6 +7,7 @@
 使い方:
     python3 wp_post_draft.py 記事.md [アイキャッチ画像.png]
     python3 wp_post_draft.py --update 投稿ID 記事.md   (既存の投稿のタイトルと本文だけを上書き)
+    python3 wp_post_draft.py   (引数なしで実行すると、記事と画像を番号で選べる)
 """
 import base64
 import html
@@ -81,6 +82,37 @@ def md_to_html(md):
     return "\n".join(out)
 
 
+def choose(label, paths, allow_none=False):
+    """候補を番号付きで表示し、選ばれたパスを返す(「なし」は None)。"""
+    if not paths and not allow_none:
+        sys.exit(f"{label}が見つかりません")
+    print(f"{label}を選んでください:")
+    if allow_none:
+        print("  0: なし")
+    for i, path in enumerate(paths, 1):
+        print(f"  {i}: {path}")
+    while True:
+        answer = input("番号> ").strip()
+        if answer.isdigit():
+            n = int(answer)
+            if allow_none and n == 0:
+                return None
+            if 1 <= n <= len(paths):
+                return paths[n - 1]
+        print("一覧の番号を入力してください")
+
+
+def pick_files():
+    """スクリプトと同じフォルダから記事とアイキャッチ画像を選ばせる。"""
+    folder = os.path.dirname(os.path.abspath(__file__))
+    names = sorted(os.listdir(folder))
+    articles = [n for n in names if n.endswith(".md") and n not in ("CLAUDE.md", "profile.md")]
+    images = [n for n in names if n.lower().endswith((".png", ".jpg", ".jpeg", ".gif", ".webp"))]
+    article = choose("記事", articles)
+    image = choose("アイキャッチ画像", images, allow_none=True)
+    return [os.path.join(folder, n) for n in (article, image) if n]
+
+
 def main():
     args = sys.argv[1:]
     update_id = None
@@ -89,7 +121,7 @@ def main():
             sys.exit(__doc__)
         update_id, args = args[1], args[2:]
     if not args:
-        sys.exit(__doc__)
+        args = pick_files()
     md = open(args[0], encoding="utf-8").read()
     title_match = re.match(r"^#\s+(.*)", md)
     if not title_match:
