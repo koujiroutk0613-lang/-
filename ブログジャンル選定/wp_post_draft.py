@@ -65,12 +65,13 @@ def upload_image(image_path):
 
 
 def inline(text):
-    """エスケープしたうえで **太字** だけを <strong> にする。"""
-    return re.sub(r"\*\*(.+?)\*\*", r"<strong>\1</strong>", html.escape(text))
+    """エスケープしたうえで **太字** を <strong> に、==マーカー== をCocoonの黄色マーカーにする。"""
+    text = re.sub(r"\*\*(.+?)\*\*", r"<strong>\1</strong>", html.escape(text))
+    return re.sub(r"==(.+?)==", r'<span class="marker-under">\1</span>', text)
 
 
 def md_to_html(md):
-    """見出し・段落・箇条書き・太字・HTMLコメントだけを扱う簡易変換。"""
+    """見出し・段落・箇条書き・太字・マーカー・HTMLコメントだけを扱う簡易変換。"""
     out, para, items = [], [], []
 
     def flush():
