@@ -70,8 +70,21 @@ def inline(text):
     return re.sub(r"==(.+?)==", r'<span class="marker-under">\1</span>', text)
 
 
+def speech(name, face, text):
+    """Cocoon標準の吹き出し（アイコンは左）。画像URLは eyecatch_tool/avatars.json から読む。"""
+    path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "eyecatch_tool", "avatars.json")
+    icons = json.load(open(path, encoding="utf-8"))
+    if face not in icons:
+        sys.exit(f"吹き出しの表情「{face}」がありません（使えるのは {'・'.join(icons)}）")
+    name = html.escape(name)
+    return (f'<div class="speech-wrap sbs-stn sbp-l sbis-cb cf"><div class="speech-person">'
+            f'<figure class="speech-icon"><img src="{icons[face]}" alt="{name}" class="speech-icon-image"></figure>'
+            f'<div class="speech-name">{name}</div></div>'
+            f'<div class="speech-balloon"><p>{inline(text)}</p></div></div>')
+
+
 def md_to_html(md):
-    """見出し・段落・箇条書き・太字・マーカー・HTMLコメントだけを扱う簡易変換。"""
+    """見出し・段落・箇条書き・太字・マーカー・吹き出し・HTMLコメントだけを扱う簡易変換。"""
     out, para, items = [], [], []
 
     def flush():
@@ -90,6 +103,10 @@ def md_to_html(md):
             # HTMLコメントやボタンなどのHTMLはそのまま通す
             flush()
             out.append(line)
+        elif m := re.match(r"^@(\S+?)\((\S+?)\):\s*(.+)", s):
+            # 吹き出し：@おさる(笑顔): セリフ
+            flush()
+            out.append(speech(*m.groups()))
         elif m := re.match(r"^(#{2,6})\s+(.*)", s):
             flush()
             level = len(m.group(1))
