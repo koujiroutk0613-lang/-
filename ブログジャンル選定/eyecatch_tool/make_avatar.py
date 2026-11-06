@@ -1,5 +1,6 @@
-"""吹き出し用のアイコン（男性キャラ・400x400）を表情ごとに作る。
-使い方: python3 make_avatar.py 出力フォルダ 作業フォルダ
+"""吹き出し用のアイコン（400x400）を表情ごとに作る。
+キャラは monkey（おさるさん。本人が昔「サル顔」と言われていたことから）と human。
+使い方: python3 make_avatar.py 出力フォルダ 作業フォルダ [monkey|human]
 """
 import subprocess
 import sys
@@ -56,11 +57,36 @@ def svg(face):
 </g>{EXTRA[face]}</svg>'''
 
 
-def render(face, out, work):
+FUR = "#8a5a3c"
+MASK = "#f7dcc3"
+
+
+def svg_monkey(face):
+    return f'''<svg xmlns="http://www.w3.org/2000/svg" width="400" height="400" viewBox="0 0 400 400">
+<circle cx="200" cy="200" r="196" fill="#ffeede"/>
+<clipPath id="c"><circle cx="200" cy="200" r="196"/></clipPath>
+<g clip-path="url(#c)">
+ <path d="M70 420 q0 -110 130 -110 q130 0 130 110z" fill="#8cc4b4" stroke="{INK}" stroke-width="7"/>
+ <path d="M168 314 l32 32 l32 -32" fill="#fff" stroke="{INK}" stroke-width="6" stroke-linejoin="round"/>
+ <circle cx="88" cy="196" r="40" fill="{FUR}" stroke="{INK}" stroke-width="7"/><circle cx="88" cy="196" r="22" fill="#f4b8a4"/>
+ <circle cx="312" cy="196" r="40" fill="{FUR}" stroke="{INK}" stroke-width="7"/><circle cx="312" cy="196" r="22" fill="#f4b8a4"/>
+ <circle cx="200" cy="196" r="112" fill="{FUR}" stroke="{INK}" stroke-width="7"/>
+ <path d="M186 86 q6 -26 30 -20 q-18 4 -14 24" fill="{FUR}" stroke="{INK}" stroke-width="6" stroke-linejoin="round"/>
+ <circle cx="164" cy="178" r="48" fill="{MASK}"/><circle cx="236" cy="178" r="48" fill="{MASK}"/>
+ <ellipse cx="200" cy="236" rx="80" ry="58" fill="{MASK}"/>
+ <ellipse cx="192" cy="214" rx="5" ry="4" fill="{INK}"/><ellipse cx="208" cy="214" rx="5" ry="4" fill="{INK}"/>
+ <ellipse cx="140" cy="232" rx="15" ry="9" fill="#f4a3a0" opacity=".8"/>
+ <ellipse cx="260" cy="232" rx="15" ry="9" fill="#f4a3a0" opacity=".8"/>
+ <g transform="translate(0,-16)">{BROWS[face]}{EYES[face]}</g>
+ <g transform="translate(0,-6)">{MOUTH[face]}</g>
+</g>{EXTRA[face]}</svg>'''
+
+
+def render(face, out, work, char="monkey"):
     h = f"{work}/avatar_{face}.html"
     open(h, "w", encoding="utf-8").write(
         '<!doctype html><meta charset="utf-8"><link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@900&display=block" rel="stylesheet">'
-        f'<style>html,body{{margin:0;background:transparent}}</style>{svg(face)}')
+        f'<style>html,body{{margin:0;background:transparent}}</style>{(svg_monkey if char == "monkey" else svg)(face)}')
     png = f"{work}/avatar_{face}.png"
     subprocess.run([CHROME, "--headless=new", "--no-sandbox", "--disable-gpu", "--hide-scrollbars",
                     "--default-background-color=00000000", "--window-size=400,600",
@@ -70,6 +96,7 @@ def render(face, out, work):
 
 
 if __name__ == "__main__":
+    char = sys.argv[3] if len(sys.argv) > 3 else "monkey"
     for face in EYES:
-        render(face, f"{sys.argv[1]}/avatar_{face}.png", sys.argv[2])
-        print("wrote", face)
+        render(face, f"{sys.argv[1]}/avatar_{char}_{face}.png", sys.argv[2], char)
+        print("wrote", char, face)
