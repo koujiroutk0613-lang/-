@@ -1,4 +1,5 @@
 """ブログ共通デザインのアイキャッチ画像（1200x630）を作る。
+バッジは右上（Cocoonが一覧で左上にカテゴリ名を重ねるため）。
 使い方: python3 make_eyecatch.py specs.json 作業フォルダ
 specs.json: [{"out": 出力png, "cat": love|mind|family|work|body|life, "l1": 上の一言, "l2": 大きい色文字, "l3": マーカー文字, "pill": 下の帯}]
 """
@@ -61,7 +62,7 @@ def html(cat, l1, l2, l3, pill, badge="実体験<br>ブログ"):
 html,body{{margin:0;width:1200px;height:630px;overflow:hidden}}
 body{{font-family:"M PLUS Rounded 1c",sans-serif;position:relative;color:#3b2f2a;background-color:{t['bg']};background-image:radial-gradient({t['dot']} 2.5px,transparent 2.6px);background-size:28px 28px}}
 .card{{position:absolute;left:44px;top:44px;width:700px;height:542px;background:#fff;border-radius:28px;box-shadow:0 10px 0 {t['shadow']}}}
-.badge{{position:absolute;left:18px;top:14px;width:118px;height:118px;border-radius:50%;background:{t['accent']};color:#fff;font-weight:900;font-size:30px;display:flex;align-items:center;justify-content:center;transform:rotate(-12deg);box-shadow:0 5px 0 {t['badge_sh']};z-index:3;line-height:1.1;text-align:center}}
+.badge{{position:absolute;left:646px;top:14px;width:118px;height:118px;border-radius:50%;background:{t['accent']};color:#fff;font-weight:900;font-size:30px;display:flex;align-items:center;justify-content:center;transform:rotate(12deg);box-shadow:0 5px 0 {t['badge_sh']};z-index:3;line-height:1.1;text-align:center}}
 .t{{position:absolute;left:96px;top:118px;font-weight:900;width:620px}}
 .l1{{font-size:46px;white-space:nowrap}}
 .l2{{font-size:100px;color:{t['accent']};line-height:1.15;margin-top:6px;white-space:nowrap}}
