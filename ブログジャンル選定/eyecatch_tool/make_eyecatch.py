@@ -8,7 +8,12 @@ import sys
 
 from PIL import Image
 
-CHROME = "/opt/pw-browsers/chromium-1194/chrome-linux/chrome"
+import glob
+import shutil
+
+# 環境によってChromiumの場所が違うので、見つかったものを使う
+CHROME = (sorted(glob.glob("/opt/pw-browsers/chromium-*/chrome-linux*/chrome")) or [None])[-1] \
+    or shutil.which("google-chrome") or shutil.which("chromium")
 
 THEMES = {
     "love":   dict(bg="#ffeede", dot="#ffd9bf", accent="#e5603c", shadow="#f6c9ad", badge_sh="#b8452a", soft="#ffe3d3", soft2="#e5a089"),
