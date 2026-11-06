@@ -66,8 +66,8 @@ def svg_monkey(face):
 <circle cx="200" cy="200" r="196" fill="#ffeede"/>
 <clipPath id="c"><circle cx="200" cy="200" r="196"/></clipPath>
 <g clip-path="url(#c)">
- <path d="M70 420 q0 -110 130 -110 q130 0 130 110z" fill="#8cc4b4" stroke="{INK}" stroke-width="7"/>
- <path d="M168 314 l32 32 l32 -32" fill="#fff" stroke="{INK}" stroke-width="6" stroke-linejoin="round"/>
+ <path d="M80 420 q0 -110 120 -110 q120 0 120 110z" fill="{FUR}" stroke="{INK}" stroke-width="7"/>
+ <ellipse cx="200" cy="384" rx="62" ry="58" fill="{MASK}"/>
  <circle cx="88" cy="196" r="40" fill="{FUR}" stroke="{INK}" stroke-width="7"/><circle cx="88" cy="196" r="22" fill="#f4b8a4"/>
  <circle cx="312" cy="196" r="40" fill="{FUR}" stroke="{INK}" stroke-width="7"/><circle cx="312" cy="196" r="22" fill="#f4b8a4"/>
  <circle cx="200" cy="196" r="112" fill="{FUR}" stroke="{INK}" stroke-width="7"/>
