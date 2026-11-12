@@ -20,7 +20,7 @@ ADHDと診断された人や、その傾向がある人が、自分の強みに�
 
 読もうと思ったきっかけは、シンプルです。**私自身がADHDなので、自分を理解したかった**からです。
 
-<!-- 商品リンク：もしも かんたんリンク（コード待ち） -->
+本の詳細は、記事の最後に載せています。
 
 ## 本を読んで、あらためて認識した私の症状
 
@@ -114,4 +114,6 @@ https://health-reset-note.com/adhd%e3%81%af%e3%81%84%e3%81%a4%e3%80%81%e8%aa%b0%
 
 ADHDの自分を責める前に、まずは自分を理解する。そのきっかけとして、同じように悩んでいる人に読んでほしい一冊です。
 
-<!-- 商品リンク：もしも かんたんリンク（コード待ち） -->
+気になった方は、こちらからチェックしてみてください。
+
+<!-- START MoshimoAffiliateEasyLink --><script type="text/javascript">(function(b,c,f,g,a,d,e){b.MoshimoAffiliateObject=a;b[a]=b[a]||function(){arguments.currentScript=c.currentScript||c.scripts[c.scripts.length-2];(b[a].q=b[a].q||[]).push(arguments)};c.getElementById(a)||(d=c.createElement(f),d.src=g,d.id=a,e=c.getElementsByTagName("body")[0],e.appendChild(d))})(window,document,"script","//dn.msmstatic.com/site/cardlink/bundle.js?20220329","msmaflink");msmaflink({"n":"ハーバード式 大人のADHDパーフェクトガイド","b":"株式会社法研","t":"","d":"https:\/\/m.media-amazon.com","c_p":"\/images\/I","p":["\/51jQr5NC39L._SL500_.jpg","\/51m5GfgclbL._SL500_.jpg","\/41hoes17nQL._SL500_.jpg","\/418onRSlvdL._SL500_.jpg","\/41KEyBh8EIL._SL500_.jpg","\/41-wtBC6rML._SL500_.jpg"],"u":{"u":"https:\/\/www.amazon.co.jp\/dp\/4865130810","t":"amazon","r_v":""},"v":"2.1","b_l":[{"id":1,"u_tx":"Amazonで見る","u_bc":"#f79256","u_url":"https:\/\/www.amazon.co.jp\/dp\/4865130810","a_id":5660584,"p_id":170,"pl_id":27060,"pc_id":185,"s_n":"amazon","u_so":1},{"id":2,"u_tx":"楽天市場で見る","u_bc":"#f76956","u_url":"https:\/\/search.rakuten.co.jp\/search\/mall\/%E3%83%8F%E3%83%BC%E3%83%90%E3%83%BC%E3%83%89%E5%BC%8F%20%E5%A4%A7%E4%BA%BA%E3%81%AEADHD%E3%83%91%E3%83%BC%E3%83%95%E3%82%A7%E3%82%AF%E3%83%88%E3%82%AC%E3%82%A4%E3%83%89\/","a_id":5660575,"p_id":54,"pl_id":27059,"pc_id":54,"s_n":"rakuten","u_so":2}],"eid":"twLWu","s":"s"});</script><div id="msmaflink-twLWu">リンク</div><!-- MoshimoAffiliateEasyLink END -->
