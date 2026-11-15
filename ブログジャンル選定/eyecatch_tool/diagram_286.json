@@ -1,0 +1,11 @@
+{
+ "out": "/home/user/-/ブログジャンル選定/diagram/diagram_286_ai_work.png",
+ "cat": "work",
+ "title": "AIで早くなった時間は、どこへ行く？",
+ "items": [
+  {"head": "以前", "body": "書類が終わらず\n残業することも"},
+  {"head": "AIを使って", "body": "書類が早く終わり\n残業が減った"},
+  {"head": "でも…", "body": "空いた時間に\n別の仕事が入る"}
+ ],
+ "conclusion": "大事なのは、生まれた時間を何に使うか"
+}
